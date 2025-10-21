@@ -40,7 +40,7 @@ public class PostService {
 
         Post saved = postRepository.save(post);
 
-        return PostCreateRes.from(post);
+        return PostCreateRes.from(saved);
     }
 
 
