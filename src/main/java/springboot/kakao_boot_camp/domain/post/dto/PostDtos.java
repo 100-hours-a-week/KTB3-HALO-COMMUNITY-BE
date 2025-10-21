@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class PostDtos {
-    // -- C ==
+    // -- 게시글 생성 ==
     public record PostCreateReq(
             @NotBlank(message = "제목이 비었습니다.")
             String title,
@@ -39,7 +39,7 @@ public class PostDtos {
     }
     
     
-    // -- R --
+    // -- 게시글 리스트 및 단건 조회  --
     public record PostListRes(
         List<PostSummary> posts,
         CursorInfo pageInfo
@@ -120,7 +120,7 @@ public class PostDtos {
     }
 
 
-    // -- U --
+    // -- 게시글 수정  --
     public record PostUpdateReq(
             String title,
             String content,
@@ -155,7 +155,7 @@ public class PostDtos {
     }
 
 
-    // -- D --
+    // -- 게시글 삭제  --
     public record PostDeleteReq(){}
     public record PostDeleteRes(
             Long postId,

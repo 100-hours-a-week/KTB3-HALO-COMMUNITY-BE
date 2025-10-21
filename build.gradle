@@ -1,4 +1,4 @@
-plugins {
+	plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.5.6'
 	id 'io.spring.dependency-management' version '1.1.7'
@@ -22,6 +22,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+
 	// JPA
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
@@ -40,6 +41,8 @@ dependencies {
 
 	// Spring Security (웹 필터 및 인증 X)
 	implementation 'org.springframework.security:spring-security-crypto'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 
 
 }
