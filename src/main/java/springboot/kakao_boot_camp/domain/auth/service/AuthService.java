@@ -2,6 +2,7 @@ package springboot.kakao_boot_camp.domain.auth.service;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import springboot.kakao_boot_camp.domain.auth.dto.AuthDtos.*;
 import springboot.kakao_boot_camp.domain.auth.exception.DuplicateEmailException;
@@ -50,15 +51,17 @@ public class AuthService {      //Dto로 컨트롤러에서 받음
         return new SignRes(savedUSer.getId());
 
     }
-    public LoginRes login(LoginReq req) throws RuntimeException{
+
+    public LoginRes login(LoginReq req) throws RuntimeException {
         String accessTokenSample = "asfdafdfadsasdfadfsa";
+
+//        UsernamePasswordAuthenticationToken authToken
 
         User user = userRepo.findByEmail(req.email())
                 .orElseThrow(() -> new InvalidLoginException());
 
 
-
-         if(!passwordEncoder.matches(req.passWord(), user.getPassWord())){
+        if (!passwordEncoder.matches(req.passWord(), user.getPassWord())) {
             throw new InvalidLoginException();
         }
 
