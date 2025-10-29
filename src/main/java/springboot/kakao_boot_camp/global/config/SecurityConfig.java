@@ -28,8 +28,10 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
+
+
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**").permitAll()                         // api/v1/auth로 오는 URL들 모두 허용
+                        .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated());                                           // 그 외 요청은 인증 필요
 
         return http.build();
@@ -48,4 +50,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
+
 }

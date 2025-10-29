@@ -10,7 +10,7 @@ import springboot.kakao_boot_camp.domain.post.dto.PostDtos.*;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 import springboot.kakao_boot_camp.domain.post.repository.PostRepository;
 import springboot.kakao_boot_camp.domain.user.entity.User;
-import springboot.kakao_boot_camp.domain.user.repository.UserRepo;
+import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -23,15 +23,13 @@ import static org.mockito.BDDMockito.*;
 public class PostServiceTest {
 
     @Mock
-    private UserRepo userRepository;
+    private UserRepository userRepository;
 
     @Mock
     private PostRepository postRepository;
 
     @InjectMocks
     private PostService postService;
-
-
 
     @Test
     public void createPostTest() {

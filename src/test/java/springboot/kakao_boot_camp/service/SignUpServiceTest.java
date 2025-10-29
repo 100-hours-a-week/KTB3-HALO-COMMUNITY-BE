@@ -7,9 +7,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import springboot.kakao_boot_camp.domain.auth.dto.AuthDtos.*;
-import springboot.kakao_boot_camp.domain.auth.service.AuthService;
+import springboot.kakao_boot_camp.domain.auth.service.SignUpService;
 import springboot.kakao_boot_camp.domain.user.entity.User;
-import springboot.kakao_boot_camp.domain.user.repository.UserRepo;
+import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.*;
@@ -18,16 +18,16 @@ import static org.mockito.BDDMockito.given;
 
 
 @ExtendWith(MockitoExtension.class)
-public class AuthServiceTest {
+public class SignUpServiceTest {
 
     @Mock
-    private UserRepo userRepo;
+    private UserRepository userRepo;
 
     @Mock
     private PasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private AuthService authService;
+    private SignUpService authService;
 
     @Test
     public void signUpTest() {

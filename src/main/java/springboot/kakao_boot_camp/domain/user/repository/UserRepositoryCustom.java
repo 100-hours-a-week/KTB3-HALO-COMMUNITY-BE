@@ -6,6 +6,6 @@ import springboot.kakao_boot_camp.domain.user.entity.User;
 import java.util.List;
 
 @Repository
-public interface UserRepoCustom {
+public interface UserRepositoryCustom {
     public List<User> getUsers();
 }

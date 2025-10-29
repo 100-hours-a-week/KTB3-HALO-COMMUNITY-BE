@@ -9,7 +9,7 @@ import springboot.kakao_boot_camp.domain.post.exception.PostNotFoundException;
 import springboot.kakao_boot_camp.domain.post.repository.PostRepository;
 import springboot.kakao_boot_camp.domain.user.entity.User;
 import springboot.kakao_boot_camp.domain.user.exception.UserNotFoundException;
-import springboot.kakao_boot_camp.domain.user.repository.UserRepo;
+import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 import springboot.kakao_boot_camp.global.dto.CursorInfo;
 
 import java.time.LocalDateTime;
@@ -18,7 +18,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class PostService {
-    private final UserRepo userRepository;
+    private final UserRepository userRepository;
     private final PostRepository postRepository;
 
      // -- C --
