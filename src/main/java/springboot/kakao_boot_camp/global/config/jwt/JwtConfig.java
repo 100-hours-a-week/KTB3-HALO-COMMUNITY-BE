@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.global.config;
+package springboot.kakao_boot_camp.global.config.jwt;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
