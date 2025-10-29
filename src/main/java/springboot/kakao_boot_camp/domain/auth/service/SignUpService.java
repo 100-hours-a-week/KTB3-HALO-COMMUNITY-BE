@@ -4,9 +4,11 @@ package springboot.kakao_boot_camp.domain.auth.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Service;
+import springboot.kakao_boot_camp.domain.auth.Manager.SignUpManager;
 import springboot.kakao_boot_camp.domain.auth.dto.signDtos.SignReq;
 import springboot.kakao_boot_camp.domain.auth.dto.signDtos.SignRes;
 import springboot.kakao_boot_camp.domain.auth.exception.DuplicateEmailException;
+import springboot.kakao_boot_camp.domain.user.UserRole;
 import springboot.kakao_boot_camp.domain.user.entity.User;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +24,7 @@ public class SignUpService {      //Dto로 컨트롤러에서 받음
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final SignUpManager signUpManager;
 
     public SignRes signUp(SignReq req) throws RuntimeException {
 
@@ -32,11 +35,18 @@ public class SignUpService {      //Dto로 컨트롤러에서 받음
         }
 
 
+        UserRole userRole = UserRole.ROLE_USER;
+
+        if (signUpManager.isAdmin( req.email())){
+            userRole=UserRole.ROLE_ADMIN;
+        }
+
         User user = User.builder()
                 .email(req.email())
                 .passWord(passwordEncoder.encode(req.passWord()))
                 .nickName(req.nickName())
                 .profileImage(req.profileImage())
+                .role(userRole)
                 .posts(null)
                 .cratedAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())

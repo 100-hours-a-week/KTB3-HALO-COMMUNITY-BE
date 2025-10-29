@@ -11,7 +11,7 @@ import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLogin
 import springboot.kakao_boot_camp.domain.auth.exception.InvalidLoginException;
 import springboot.kakao_boot_camp.domain.user.entity.User;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
-import springboot.kakao_boot_camp.global.manager.session.SessionManager;
+import springboot.kakao_boot_camp.global.manager.session.SessionAuthManager;
 
 
 @Service
@@ -20,7 +20,7 @@ public class LoginService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final SessionManager sessionManager;
+    private final SessionAuthManager sessionManager;
 
 
 

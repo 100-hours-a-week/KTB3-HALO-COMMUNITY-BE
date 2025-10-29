@@ -5,11 +5,9 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
-import springboot.kakao_boot_camp.domain.user.Roles;
+import springboot.kakao_boot_camp.domain.user.UserRole;
 
-import javax.management.relation.Role;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +41,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
-    private Roles role;
+    private UserRole role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @Builder.Default
