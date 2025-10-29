@@ -26,12 +26,12 @@ public class LoginService {
 
 
     // 세션 + 쿠키 : 세션 발급 방식
-    public SessionLoginRes sessionLogin(SessionLoginReq req, HttpServletRequest servletRequest, HttpServletResponse servletResponse) throws RuntimeException {
+    public SessionLoginRes sessionLogin(SessionLoginReq req, HttpServletRequest servletReq) throws RuntimeException {
 
         User user = userRepository.findByEmail(req.email())
                 .orElseThrow(() -> new InvalidLoginException());
 
-        sessionManager.create(servletRequest, user);
+        sessionManager.create(servletReq, user);
 
 
         return SessionLoginRes.from(user);

@@ -12,9 +12,11 @@ import java.util.Set;
 @Getter
 @Setter
 public class CustomAuthUser extends User {
+    Long userId;
 
     public CustomAuthUser(Long userId, String email, String role) {
         super(email, "", makeAuthorityList(role));
+        this.userId=userId;
     }
 
     private static Set<SimpleGrantedAuthority> makeAuthorityList(String role) {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import springboot.kakao_boot_camp.domain.post.dto.PostDtos.*;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
+import springboot.kakao_boot_camp.domain.post.exception.AccessDeniedPostException;
 import springboot.kakao_boot_camp.domain.post.exception.PostNotFoundException;
 import springboot.kakao_boot_camp.domain.post.repository.PostRepository;
 import springboot.kakao_boot_camp.domain.user.entity.User;
@@ -12,6 +13,7 @@ import springboot.kakao_boot_camp.domain.user.exception.UserNotFoundException;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 import springboot.kakao_boot_camp.global.dto.CursorInfo;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,11 +23,11 @@ public class PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
-     // -- C --
-    public PostCreateRes createPost(PostCreateReq req) {
+    // -- Create Post --
+    public PostCreateRes createPost(Long userId, PostCreateReq req) {
 
-        Long userId = 1L;
-        User user =userRepository.findById(userId)
+
+        User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
 
@@ -44,7 +46,7 @@ public class PostService {
     }
 
 
-    // -- R --
+    // -- Get Post --
     @Transactional
     public PostDetailRes getPostDetail(Long id) {
         Post post = postRepository.findById(id)
@@ -53,6 +55,7 @@ public class PostService {
         return PostDetailRes.from(post);
 
     }
+
     @Transactional(readOnly = true)
     public PostListRes getPostList(Long cursor) {
         int size = 10; // 한 번에 가져올 게시글 수
@@ -91,32 +94,39 @@ public class PostService {
     }
 
 
-    // -- U --
+    // -- Update Post --
     @Transactional
-    public PostUpdateRes updatePost(Long postId, PostUpdateReq req) {
+    public PostUpdateRes updatePost(Long userId, Long postId, PostUpdateReq req) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
 
+        if (!userId.equals(post.getUser().getId())) {
+            throw new AccessDeniedPostException();
+        }
+
         // 더티 체킹
-        if (req.title() != null)     post.setTitle(req.title());
-        if (req.content() != null)   post.setContent(req.content());
-        if (req.imageUrl() != null)  post.setImageUrl(req.imageUrl());
+        if (req.title() != null) post.setTitle(req.title());
+        if (req.content() != null) post.setContent(req.content());
+        if (req.imageUrl() != null) post.setImageUrl(req.imageUrl());
 
 
         return PostUpdateRes.from(post);
     }
 
 
-    // -- D --
+    // -- Delete Post --
     @Transactional
-    public PostDeleteRes deletePost(Long postId) {
+    public PostDeleteRes deletePost(Long userId, Long postId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
+
+        if (!userId.equals(post.getUser().getId())) {
+            throw new AccessDeniedPostException();
+        }
 
         postRepository.delete(post); // 실제 삭제
 
         return PostDeleteRes.from(postId, LocalDateTime.now());
-
     }
 
 

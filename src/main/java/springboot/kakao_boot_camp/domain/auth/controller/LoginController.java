@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLogin
 import springboot.kakao_boot_camp.domain.auth.service.LoginService;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
 import springboot.kakao_boot_camp.global.api.SuccessCode;
+import springboot.kakao_boot_camp.security.CustomAuthUser;
 
 @RestController
 @RequestMapping("/api/v1/auth/login")
@@ -25,9 +27,9 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    @PostMapping
-    public ResponseEntity<ApiResponse<SessionLoginRes>> sessionLogin(@RequestBody @Valid SessionLoginReq req, HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
-        SessionLoginRes res = loginService.sessionLogin(req, servletRequest, servletResponse);    //data 얻기x
+    @PostMapping("/session")
+    public ResponseEntity<ApiResponse<SessionLoginRes>> sessionLogin(@RequestBody @Valid SessionLoginReq req,  HttpServletRequest servletRequest) {
+        SessionLoginRes res = loginService.sessionLogin(req, servletRequest);    //data 얻기x
 
         return ResponseEntity
                 .status(HttpStatus.OK)

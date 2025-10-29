@@ -22,6 +22,8 @@ public class SessionFilter extends OncePerRequestFilter {
     private String EMAIL_KEY = "email";
     private String ROLE_KEY = "role";
 
+
+
     @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -51,7 +53,7 @@ public class SessionFilter extends OncePerRequestFilter {
 
 
         // 4. 인증 객체 생성 및 할당
-        Long userId = (Long) userIdObj;
+        Long userId = ((Number) userIdObj).longValue();  // 레디스에 json으로 저장해서 Long -> Integer변환으로 인한 형변환
         String email = (String) emailObj;
         String role = roleObj.toString();
         CustomAuthUser customAuthUser = CustomAuthUser.from(userId, email, role);

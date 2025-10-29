@@ -19,6 +19,7 @@ public enum ErrorCode {
 
     // -- Post --
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 게시글을 찾을 수 없습니다."),                    //404
+    POST_DENIED(HttpStatus.FORBIDDEN, "본인의 게시글만 수정/삭제할 수 있습니다."),                    //404
 
 
     // --  Comment --

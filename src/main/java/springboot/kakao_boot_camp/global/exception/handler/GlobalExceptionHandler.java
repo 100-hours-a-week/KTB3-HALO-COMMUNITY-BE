@@ -28,11 +28,7 @@ public class GlobalExceptionHandler {
     }
 
 
-
-
     // -- Common --
-
-
     @ExceptionHandler(MethodArgumentNotValidException.class)                                                         // 400
     public ResponseEntity<ApiResponse<Void>> handleValidationException(MethodArgumentNotValidException e) {
         ErrorCode errorCode = ErrorCode.INVALID_REQUEST;
@@ -40,7 +36,6 @@ public class GlobalExceptionHandler {
                 .status(errorCode.getStatus())   // 400
                 .body(ApiResponse.error(errorCode));
     }
-
 
     @ExceptionHandler(DuplicateResourceException.class)                                                              //409
     public ResponseEntity<ApiResponse<Void>> hanlderDuplicateResource(DuplicateResourceException e){
