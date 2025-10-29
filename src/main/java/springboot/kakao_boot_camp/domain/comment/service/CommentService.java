@@ -1,6 +1,5 @@
 package springboot.kakao_boot_camp.domain.comment.service;
 
-import jakarta.validation.ValidationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,8 +16,7 @@ import springboot.kakao_boot_camp.domain.post.exception.PostNotFoundException;
 import springboot.kakao_boot_camp.domain.post.repository.PostRepository;
 import springboot.kakao_boot_camp.domain.user.entity.User;
 import springboot.kakao_boot_camp.domain.user.exception.UserNotFoundException;
-import springboot.kakao_boot_camp.domain.user.repository.UserRepo;
-import springboot.kakao_boot_camp.global.dto.CursorInfo;
+import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 import springboot.kakao_boot_camp.global.dto.PageInfo;
 
 import java.time.LocalDateTime;
@@ -27,7 +25,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CommentService {
-    private final UserRepo userRepository;
+    private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
 

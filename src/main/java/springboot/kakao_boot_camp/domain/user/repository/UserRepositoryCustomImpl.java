@@ -11,7 +11,7 @@ import java.util.List;
 
 
 @RequiredArgsConstructor
-public class UserRepoCustomImpl implements UserRepoCustom {
+public class UserRepositoryCustomImpl implements UserRepositoryCustom {
 
     final private EntityManager entityManager;
 

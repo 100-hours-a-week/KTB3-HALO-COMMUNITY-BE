@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     // -- Auth
-    INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),                          // 400 회원 가입
+    INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청 인자입니다."),                          // 400 회원 가입
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "중복된 이메일 입니다."),                           // 409 회원 가입
     AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 잘 못 되었습니다.") ,  // 401 로그인
 
@@ -19,6 +19,7 @@ public enum ErrorCode {
 
     // -- Post --
     POST_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 게시글을 찾을 수 없습니다."),                    //404
+    POST_DENIED(HttpStatus.FORBIDDEN, "본인의 게시글만 수정/삭제할 수 있습니다."),                    //404
 
 
     // --  Comment --

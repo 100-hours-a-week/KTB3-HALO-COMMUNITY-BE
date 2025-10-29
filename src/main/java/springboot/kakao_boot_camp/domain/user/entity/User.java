@@ -5,8 +5,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
+import springboot.kakao_boot_camp.domain.user.UserRole;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -39,8 +39,11 @@ public class User {
     @NotBlank(message = "프로필 사진을 추가해주세요.")
     private String profileImage;
 
+    @Enumerated(EnumType.STRING)
+    @Column(length = 10)
+    private UserRole role;
 
-    @OneToMany(mappedBy = "user",fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Post> posts = new ArrayList<>();       // 명시적인 형태
 
@@ -49,11 +52,6 @@ public class User {
     LocalDateTime updatedAt;
 
     LocalDateTime deletedAt;
-
-
-
-
-
 
 
 }
