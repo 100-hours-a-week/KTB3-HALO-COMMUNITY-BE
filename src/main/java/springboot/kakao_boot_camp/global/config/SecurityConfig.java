@@ -3,7 +3,6 @@ package springboot.kakao_boot_camp.global.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -14,14 +13,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import springboot.kakao_boot_camp.global.filter.session.SessionFilter;
-
-import java.security.PublicKey;
+import springboot.kakao_boot_camp.security.CustomSecurity.filter.CustomSessionFilter;
+import springboot.kakao_boot_camp.security.SpringSecurity.filter.SpringSecuritySessionFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final SessionFilter sessionFilter;
+    private final SpringSecuritySessionFilter springSecuritySessionFilter;      // 스프링 시큐리티 O, 세션 기반 인증 필터
+    private final CustomSessionFilter customSessionFilter;                      // 스프링 시큐리티 X, 세션 기반 인증 필터
 
 
     @Bean
@@ -41,7 +40,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .anyRequest().authenticated()
                 )                                         // 그 외 요청은 인증 필요
-                .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)
+//                .addFilterBefore(springSecuritySessionFilter, UsernamePasswordAuthenticationFilter.class) // 스프링 시큐리티 O, 세션 기반 인증 필터
+                .addFilterBefore(customSessionFilter, UsernamePasswordAuthenticationFilter.class)   // 스프링 시큐리티 X, 세션 기반 인증 필터
                 .build();
     }
 

@@ -2,10 +2,8 @@ package springboot.kakao_boot_camp.security;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import springboot.kakao_boot_camp.domain.user.UserRole;
 
 import java.util.Set;
 

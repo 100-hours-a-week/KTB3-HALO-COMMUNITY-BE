@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.global.filter.session;
+package springboot.kakao_boot_camp.security.SpringSecurity.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -9,14 +9,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import springboot.kakao_boot_camp.domain.user.UserRole;
 import springboot.kakao_boot_camp.security.CustomAuthUser;
 
-import javax.management.relation.Role;
 import java.io.IOException;
 
 @Component
-public class SessionFilter extends OncePerRequestFilter {
+public class SpringSecuritySessionFilter extends OncePerRequestFilter {
 
     private String USER_ID_KEY = "userId";
     private String EMAIL_KEY = "email";
