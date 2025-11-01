@@ -12,24 +12,18 @@ import java.util.Set;
 public class CustomAuthUserWithoutSpringScurity {
     Long userId;
     String email;
-    Set<SimpleGrantedAuthority> authorities;
+    String role;
 
 
     public CustomAuthUserWithoutSpringScurity(Long userId, String email, String role) {
         this.userId = userId;
         this.email = email;
-        this.authorities = makeAuthorityList(role);
+        this.role = role;
     }
 
-    private static Set<SimpleGrantedAuthority> makeAuthorityList(String role) {
-        return Set.of(new SimpleGrantedAuthority(role));
-    }
+
 
     public static CustomAuthUserWithoutSpringScurity from(Long userId, String email, String role) {
         return new CustomAuthUserWithoutSpringScurity(userId, email, role);
-    }
-
-    public Set<SimpleGrantedAuthority> getAuthorities() {
-        return this.authorities;
     }
 }
