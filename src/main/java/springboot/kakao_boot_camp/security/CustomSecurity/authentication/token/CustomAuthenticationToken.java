@@ -3,6 +3,8 @@ package springboot.kakao_boot_camp.security.CustomSecurity.authentication.token;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import springboot.kakao_boot_camp.security.CustomSecurity.authentication.principal.CustomAuthUserWithoutSpringScurity;
 
 import java.util.Collection;
 
@@ -12,7 +14,15 @@ public class CustomAuthenticationToken extends AbstractCustomAuthenticationToken
     private Object principal;
     private Object credentials;
 
-    public CustomAuthenticationToken(Object principal, Object credentials, Collection<GrantedAuthority> authorities) {
+    public CustomAuthenticationToken(Object principal, Object credentials, Collection<SimpleGrantedAuthority> authorities) {
         super(authorities);
+    }
+
+    @Override
+    public Long getUserId() {
+        if (principal instanceof CustomAuthUserWithoutSpringScurity) {
+            return ((CustomAuthUserWithoutSpringScurity) principal).getUserId();
+        }
+        return null;
     }
 }

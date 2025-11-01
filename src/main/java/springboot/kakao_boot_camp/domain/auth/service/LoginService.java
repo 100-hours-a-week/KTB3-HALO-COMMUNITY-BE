@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLoginReq;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLoginRes;
 import springboot.kakao_boot_camp.domain.auth.exception.InvalidLoginException;
+import springboot.kakao_boot_camp.domain.auth.util.CustomPasswordEncoder;
 import springboot.kakao_boot_camp.domain.user.entity.User;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 import springboot.kakao_boot_camp.global.manager.session.SessionAuthManager;
@@ -18,7 +19,8 @@ import springboot.kakao_boot_camp.global.manager.session.SessionAuthManager;
 @RequiredArgsConstructor
 public class LoginService {
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
+    private final CustomPasswordEncoder customPasswordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final SessionAuthManager sessionManager;
 
@@ -30,6 +32,10 @@ public class LoginService {
 
         User user = userRepository.findByEmail(req.email())
                 .orElseThrow(() -> new InvalidLoginException());
+
+        if(!customPasswordEncoder.match(req.passWord(),user.getPassWord())){
+            throw new InvalidLoginException();
+        }
 
         sessionManager.create(servletReq, user);
 

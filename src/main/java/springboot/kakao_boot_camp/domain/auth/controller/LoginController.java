@@ -24,7 +24,7 @@ public class LoginController {
 
     @PostMapping("/session")
     public ResponseEntity<ApiResponse<SessionLoginRes>> sessionLogin(@RequestBody @Valid SessionLoginReq req,  HttpServletRequest servletRequest) {
-        SessionLoginRes res = loginService.sessionLogin(req, servletRequest);    //data 얻기x
+        SessionLoginRes res = loginService.sessionLogin(req, servletRequest);
 
         return ResponseEntity
                 .status(HttpStatus.OK)

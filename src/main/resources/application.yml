@@ -22,6 +22,9 @@ spring:
       org.springframework.web: DEBUG
       org.springframework.security: DEBUG
 
+  profiles:
+    active: custom-security  # 또는 spring-security
+
   session:
     store-type: redis
     redis:
@@ -52,5 +55,7 @@ jwt:
   refresh:
     secret: cmVmcmVzaHNlY3JldGtleWZvcmp3dHRva2Vu
     expiration: 604800000  # 7일 = 7 * 24 * 60 * 60 * 1000
+
+
 
 

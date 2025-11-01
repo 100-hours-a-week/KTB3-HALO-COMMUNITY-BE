@@ -1,8 +1,9 @@
-package springboot.kakao_boot_camp.global.config;
+package springboot.kakao_boot_camp.security.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,9 +19,9 @@ import springboot.kakao_boot_camp.security.SpringSecurity.filter.SpringSecurityS
 
 @Configuration
 @RequiredArgsConstructor
+@Profile("custom-security")
 public class SecurityConfig {
     private final SpringSecuritySessionFilter springSecuritySessionFilter;      // 스프링 시큐리티 O, 세션 기반 인증 필터
-    private final CustomSessionFilter customSessionFilter;                      // 스프링 시큐리티 X, 세션 기반 인증 필터
 
 
     @Bean
@@ -38,10 +39,9 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll()
-                        .anyRequest().authenticated()
+                        .anyRequest().permitAll()
                 )                                         // 그 외 요청은 인증 필요
-//                .addFilterBefore(springSecuritySessionFilter, UsernamePasswordAuthenticationFilter.class) // 스프링 시큐리티 O, 세션 기반 인증 필터
-                .addFilterBefore(customSessionFilter, UsernamePasswordAuthenticationFilter.class)   // 스프링 시큐리티 X, 세션 기반 인증 필터
+                .addFilterBefore(springSecuritySessionFilter, UsernamePasswordAuthenticationFilter.class) // 스프링 시큐리티 O, 세션 기반 인증 필터
                 .build();
     }
 

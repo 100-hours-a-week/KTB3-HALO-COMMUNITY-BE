@@ -12,6 +12,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import springboot.kakao_boot_camp.global.constant.session.SessionConst;
 import springboot.kakao_boot_camp.security.CustomAuthUser;
 import springboot.kakao_boot_camp.security.CustomSecurity.Context.CustomSecurityContextHolder;
+import springboot.kakao_boot_camp.security.CustomSecurity.authentication.principal.CustomAuthUserWithoutSpringScurity;
 import springboot.kakao_boot_camp.security.CustomSecurity.authentication.token.CustomAuthenticationToken;
 
 import java.io.IOException;
@@ -21,6 +22,13 @@ import java.io.IOException;
 public class CustomSessionFilter extends OncePerRequestFilter {
 
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+        String uri = request.getRequestURI();
+
+        if(uri.startsWith("/api/v1/auth/")){
+            filterChain.doFilter(request,response);
+            return;
+        }
 
         // 1. 이미 인증된 경우 통과
         if (CustomSecurityContextHolder.getContext().getAuthentication() != null) {
@@ -51,7 +59,7 @@ public class CustomSessionFilter extends OncePerRequestFilter {
         Long userId = ((Number) userIdObj).longValue();  // 레디스에 json으로 저장해서 Long -> Integer변환으로 인한 형변환
         String email = (String) emailObj;
         String role = roleObj.toString();
-        CustomAuthUser customAuthUser = CustomAuthUser.from(userId, email, role);
+        CustomAuthUserWithoutSpringScurity customAuthUser = CustomAuthUserWithoutSpringScurity.from(userId, email, role);
         CustomAuthenticationToken token = new CustomAuthenticationToken(
                 customAuthUser, "", customAuthUser.getAuthorities());
         CustomSecurityContextHolder.getContext().setAuthentication(token);

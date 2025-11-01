@@ -7,5 +7,5 @@ import java.security.Principal;
 import java.util.Collection;
 
 public interface CustomAuthentication extends Serializable {
-
+    Long getUserId();
 }

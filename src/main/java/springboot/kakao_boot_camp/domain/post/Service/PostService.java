@@ -26,7 +26,9 @@ public class PostService {
     // -- Create Post --
     public PostCreateRes createPost(Long userId, PostCreateReq req) {
 
-
+        if (userId == null) {
+            throw new UserNotFoundException();
+        }
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
