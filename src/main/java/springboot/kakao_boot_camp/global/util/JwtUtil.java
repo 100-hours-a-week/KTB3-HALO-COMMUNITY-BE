@@ -6,7 +6,7 @@
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.security.core.Authentication;
 //import org.springframework.stereotype.Component;
-//import springboot.kakao_boot_camp.global.config.JwtConfig;
+//import springboot.kakao_boot_camp.global.config.jwt.JwtConfig;
 //
 //import javax.crypto.SecretKey;
 //

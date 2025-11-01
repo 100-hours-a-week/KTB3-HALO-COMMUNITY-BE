@@ -3,28 +3,50 @@ spring:
     banner-mode: off
 
   datasource:
-    url : jdbc:mysql://localhost:3306/Community?serverTimezone=UTC&useSSL=false
+    url: jdbc:mysql://localhost:3306/Community?serverTimezone=UTC&useSSL=false
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
+    hibernate:
+      ddl-auto: none   # 개발 중에는 create / create-drop / update 중 선택
+    properties:
       hibernate:
-        ddl-auto: none   # 개발 중에는 create / create-drop / update 중 선택
-      properties:
-        hibernate:
-          format_sql: true
-          use_sql_comments: true
+        format_sql: true
+        use_sql_comments: true
 
   logging:
-    logging:
-      level:
-        root: INFO
-        org.springframework.web: DEBUG
-        org.springframework.security: DEBUG
+    level:
+      root: INFO
+      org.springframework.web: DEBUG
+      org.springframework.security: DEBUG
+
+  profiles:
+    active: custom-security  # 또는 spring-security
+
+  session:
+    store-type: redis
+    redis:
+      namespace: shboard:session
+
+  data:
+    redis:
+      host: localhost
+      password: 'gustjq3735!'
+      port: 6379
+
 
 server:
   port: 8080
+  servlet:
+    session:
+      cookie:
+        name:
+          JSESSIONID
+
+
+
 
 jwt:
   access:
@@ -33,3 +55,7 @@ jwt:
   refresh:
     secret: cmVmcmVzaHNlY3JldGtleWZvcmp3dHRva2Vu
     expiration: 604800000  # 7일 = 7 * 24 * 60 * 60 * 1000
+
+
+
+

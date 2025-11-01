@@ -4,11 +4,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import springboot.kakao_boot_camp.domain.post.Service.PostService;
 import springboot.kakao_boot_camp.domain.post.dto.PostDtos.*;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
 import springboot.kakao_boot_camp.global.api.SuccessCode;
+import springboot.kakao_boot_camp.security.CustomAuthUser;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -19,8 +21,8 @@ public class PostController {
 
     // -- C --
     @PostMapping
-    public ResponseEntity<ApiResponse<PostCreateRes>> create(@RequestBody @Valid PostCreateReq req) {
-        PostCreateRes res = postService.createPost(req);
+    public ResponseEntity<ApiResponse<PostCreateRes>> create(@RequestBody @Valid PostCreateReq req, @AuthenticationPrincipal CustomAuthUser currentUser) {
+        PostCreateRes res = postService.createPost(currentUser.getUserId(),req);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success(SuccessCode.POST_CREATE_SUCCESS, res));
@@ -44,9 +46,8 @@ public class PostController {
 
     // -- U --
     @PatchMapping("/{postId}")
-    public ResponseEntity<ApiResponse<PostUpdateRes>> patch(@PathVariable Long postId, /*@AuthenticationPrincipal UserDetails user,*/ @RequestBody PostUpdateReq req) {
-
-        PostUpdateRes res = postService.updatePost(postId, req);
+    public ResponseEntity<ApiResponse<PostUpdateRes>> patch(@PathVariable Long postId, @AuthenticationPrincipal CustomAuthUser currentUser, @RequestBody PostUpdateReq req) {
+        PostUpdateRes res = postService.updatePost(currentUser.getUserId(), postId, req);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.success(SuccessCode.POST_UPDATE_SUCCESS, res));
@@ -55,8 +56,8 @@ public class PostController {
 
     // -- D --
     @DeleteMapping("/{postId}")
-    public ResponseEntity<ApiResponse<PostDeleteRes>> delete(@PathVariable Long postId) {
-        PostDeleteRes res = postService.deletePost(postId);
+    public ResponseEntity<ApiResponse<PostDeleteRes>> delete(@PathVariable Long postId,  @AuthenticationPrincipal CustomAuthUser currentUser) {
+        PostDeleteRes res = postService.deletePost(currentUser.getUserId(), postId);
 
         return ResponseEntity.status(HttpStatus.OK)
                 .body(ApiResponse.success(SuccessCode.POST_DELETE_SUCCESS, res));

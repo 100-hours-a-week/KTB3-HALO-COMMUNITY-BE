@@ -3,13 +3,13 @@ package springboot.kakao_boot_camp.domain.user;
 import lombok.Getter;
 
 @Getter
-public enum Roles {
-    ROLE_USER("admin"),
-    ROLE_ADMIN("user");
+public enum UserRole {
+    ROLE_USER("user"),
+    ROLE_ADMIN("admin");
 
     private final String description;
 
-    Roles(String description) {
+    UserRole(String description) {
         this.description = description;
     }
 
