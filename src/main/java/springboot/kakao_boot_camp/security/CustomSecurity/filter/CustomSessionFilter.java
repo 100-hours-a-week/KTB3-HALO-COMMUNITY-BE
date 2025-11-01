@@ -38,7 +38,7 @@ public class CustomSessionFilter extends OncePerRequestFilter {
 
 
         // 2. 세션 확인
-        HttpSession session = request.getSession(false);
+        HttpSession session = request.getSession(false);    // 자동으로 redis에서 세션 ID 조회
         if (session == null) {
             filterChain.doFilter(request, response);
             return;
@@ -61,7 +61,7 @@ public class CustomSessionFilter extends OncePerRequestFilter {
         String role = roleObj.toString();
         CustomAuthUserWithoutSpringScurity customAuthUser = CustomAuthUserWithoutSpringScurity.from(userId, email, role);
         CustomAuthenticationToken token = new CustomAuthenticationToken(
-                customAuthUser, "", customAuthUser.getAuthorities());
+                customAuthUser, "", customAuthUser.getRole());
         CustomSecurityContextHolder.getContext().setAuthentication(token);
         filterChain.doFilter(request, response);
     }

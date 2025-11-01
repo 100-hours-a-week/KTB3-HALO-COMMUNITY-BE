@@ -9,5 +9,4 @@ import java.util.Collection;
 
 @AllArgsConstructor
 public abstract class AbstractCustomAuthenticationToken implements CustomAuthentication {
-	private Collection<SimpleGrantedAuthority> authorities;
 }
