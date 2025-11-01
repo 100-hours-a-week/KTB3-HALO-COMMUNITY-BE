@@ -6,14 +6,16 @@ public record JwtLoginRes(
         Long userId,
         String email,
         String nickName,
-        String accessToken
+        String accessToken,
+        String refreshToken
 ) {
-    public static JwtLoginRes from(User user, String accessToken) {
+    public static JwtLoginRes from(User user, String accessToken, String refreshToken) {
         return new JwtLoginRes(
                 user.getId(),
                 user.getEmail(),
                 user.getNickName(),
-                accessToken
+                accessToken,
+                refreshToken
         );
 
     }

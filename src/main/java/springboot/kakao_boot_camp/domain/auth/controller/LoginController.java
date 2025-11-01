@@ -30,4 +30,14 @@ public class LoginController {
                 .status(HttpStatus.OK)
                 .body(ApiResponse.success(SuccessCode.LOGIN_SUCCESS, res));
     }
+
+    @PostMapping("/jwt")
+    public ResponseEntity<ApiResponse<SessionLoginRes>> jwtLogin(@RequestBody @Valid SessionLoginReq req,  HttpServletRequest servletRequest) {
+        SessionLoginRes res = loginService.jwtLogin(req, servletRequest);
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(ApiResponse.success(SuccessCode.LOGIN_SUCCESS, res));
+    }
+
 }

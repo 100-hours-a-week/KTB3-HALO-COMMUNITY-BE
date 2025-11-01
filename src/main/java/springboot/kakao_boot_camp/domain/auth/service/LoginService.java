@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.jwt.JwtLoginReq;
+import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.jwt.JwtLoginRes;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLoginReq;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLoginRes;
 import springboot.kakao_boot_camp.domain.auth.exception.InvalidLoginException;
@@ -19,21 +21,19 @@ import springboot.kakao_boot_camp.global.manager.session.SessionAuthManager;
 @RequiredArgsConstructor
 public class LoginService {
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
+    //    private final PasswordEncoder passwordEncoder;
     private final CustomPasswordEncoder customPasswordEncoder;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final SessionAuthManager sessionManager;
 
 
-
-
-    // 세션 + 쿠키 : 세션 발급 방식
+    // 1. 세션 + 쿠키 기반 로그인
     public SessionLoginRes sessionLogin(SessionLoginReq req, HttpServletRequest servletReq) throws RuntimeException {
 
         User user = userRepository.findByEmail(req.email())
                 .orElseThrow(() -> new InvalidLoginException());
 
-        if(!customPasswordEncoder.match(req.passWord(),user.getPassWord())){
+        if (!customPasswordEncoder.match(req.passWord(), user.getPassWord())) {
             throw new InvalidLoginException();
         }
 
@@ -43,4 +43,23 @@ public class LoginService {
         return SessionLoginRes.from(user);
     }
 
+    // 2. jwt 기반 로그인
+    public JwtLoginRes jwtLogin(JwtLoginReq req, HttpServletRequest servletReq) throws RuntimeException {
+        String accessToken;
+        String refreshToken;
+
+        User user = userRepository.findByEmail(req.email())
+                .orElseThrow(() -> new InvalidLoginException());
+
+        if (!customPasswordEncoder.match(req.passWord(), user.getPassWord())) {
+            throw new InvalidLoginException();
+        }
+
+        jwtUtil.cre(servletReq, user);
+
+
+        return SessionLoginRes.from(user, accessToken, refreshToken);
+    }
+
+}
 }
