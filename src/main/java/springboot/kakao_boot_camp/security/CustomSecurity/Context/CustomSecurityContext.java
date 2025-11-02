@@ -2,7 +2,6 @@ package springboot.kakao_boot_camp.security.CustomSecurity.Context;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.Authentication;
 import springboot.kakao_boot_camp.security.CustomSecurity.authentication.CustomAuthentication;
 
 import java.io.Serializable;

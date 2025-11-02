@@ -18,7 +18,7 @@ import springboot.kakao_boot_camp.security.CustomSecurity.Context.CustomSecurity
 import springboot.kakao_boot_camp.security.CustomSecurity.authentication.CustomAuthentication;
 
 @RestController
-@RequestMapping("/api/v1/jwt/posts")
+@RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
 public class PostControllerCustomJwt {
     private final PostService postService;

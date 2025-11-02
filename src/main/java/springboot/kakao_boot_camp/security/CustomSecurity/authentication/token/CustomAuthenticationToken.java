@@ -2,8 +2,6 @@ package springboot.kakao_boot_camp.security.CustomSecurity.authentication.token;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import springboot.kakao_boot_camp.security.CustomSecurity.authentication.CustomAuthentication;
 import springboot.kakao_boot_camp.security.CustomSecurity.authentication.principal.CustomAuthUserWithoutSpringScurity;
 

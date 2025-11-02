@@ -24,16 +24,8 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    @PostMapping("/session")
-    public ResponseEntity<ApiResponse<SessionLoginRes>> sessionLogin(@RequestBody @Valid SessionLoginReq req,  HttpServletRequest servletRequest) {
-        SessionLoginRes res = loginService.sessionLogin(req, servletRequest);
 
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(ApiResponse.success(SuccessCode.LOGIN_SUCCESS, res));
-    }
-
-    @PostMapping("/jwt")
+    @PostMapping
     public ResponseEntity<ApiResponse<JwtLoginRes>> jwtLogin(@RequestBody @Valid JwtLoginReq req, HttpServletRequest servletRequest) {
         JwtLoginRes res = loginService.jwtLogin(req, servletRequest);
 
