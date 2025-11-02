@@ -8,18 +8,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springboot.kakao_boot_camp.domain.auth.exception.SessionExpiredException;
+import springboot.kakao_boot_camp.domain.auth.exception.JwtTokenExpiredException;
 import springboot.kakao_boot_camp.domain.post.Service.PostService;
-import springboot.kakao_boot_camp.domain.post.dto.PostDtos.*;
+import springboot.kakao_boot_camp.domain.post.dto.PostDtos.PostCreateReq;
+import springboot.kakao_boot_camp.domain.post.dto.PostDtos.PostCreateRes;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
 import springboot.kakao_boot_camp.global.api.SuccessCode;
 import springboot.kakao_boot_camp.security.CustomSecurity.Context.CustomSecurityContextHolder;
 import springboot.kakao_boot_camp.security.CustomSecurity.authentication.CustomAuthentication;
 
 @RestController
-@RequestMapping("/api/v1/session/posts")
+@RequestMapping("/api/v1/jwt/posts")
 @RequiredArgsConstructor
-public class PostControllerCustomSession {
+public class PostControllerCustomJwt {
     private final PostService postService;
 
 
@@ -28,9 +29,8 @@ public class PostControllerCustomSession {
     public ResponseEntity<ApiResponse<PostCreateRes>> create(@RequestBody @Valid PostCreateReq req) {
         CustomAuthentication auth = CustomSecurityContextHolder.getContext().getAuthentication();
         if(auth==null){
-            throw new SessionExpiredException();
+            throw new JwtTokenExpiredException();
         }
-
         Long currentUserId = auth.getUserId();
         PostCreateRes res = postService.createPost(currentUserId,req);
 

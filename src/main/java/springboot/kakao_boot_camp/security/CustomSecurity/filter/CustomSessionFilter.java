@@ -5,6 +5,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,14 +18,16 @@ import springboot.kakao_boot_camp.security.CustomSecurity.authentication.token.C
 
 import java.io.IOException;
 
-
-@Component
+@RequiredArgsConstructor
 public class CustomSessionFilter extends OncePerRequestFilter {
 
+
+
+    @Override
     public void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
+        // 0. 로그인 및 회원가입 제외
         String uri = request.getRequestURI();
-
         if(uri.startsWith("/api/v1/auth/")){
             filterChain.doFilter(request,response);
             return;

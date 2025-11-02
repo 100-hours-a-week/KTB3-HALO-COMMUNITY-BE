@@ -5,12 +5,11 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/Community?serverTimezone=UTC&useSSL=false
     username: root
-    password:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: none   # 개발 중에는 create / create-drop / update 중 선택
+      ddl-auto: update   # 개발 중에는 create / create-drop / update 중 선택
     properties:
       hibernate:
         format_sql: true
@@ -46,14 +45,16 @@ server:
           JSESSIONID
 
 
+auth:
+  type: session  # jwt or session
 
 
 jwt:
   access:
-    secret: aGVsbG93b3JsZGhlbGxvd29ybGRoZWxsb3dvcmxk
+    secret: aGVsbG93b3JsZGhlbGxvd29ybGRoZWxsb3dvcmxkaGVsbG93b3JsZGhlbGxvd29ybGQ
     expiration: 900000  # 15분 = 15 * 60 * 1000
   refresh:
-    secret: cmVmcmVzaHNlY3JldGtleWZvcmp3dHRva2Vu
+    secret: cmVmcmVzaHNlY3JldGtleWZvcmp3dHRva2VucmVmcmVzaHNlY3JldGtleWZvcmp3dA
     expiration: 604800000  # 7일 = 7 * 24 * 60 * 60 * 1000
 
 

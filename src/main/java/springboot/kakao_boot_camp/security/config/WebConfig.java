@@ -2,6 +2,7 @@ package springboot.kakao_boot_camp.security.config;
 
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,24 +14,44 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springboot.kakao_boot_camp.domain.auth.util.CustomPasswordEncoder;
+import springboot.kakao_boot_camp.domain.auth.util.JwtUtil;
+import springboot.kakao_boot_camp.security.CustomSecurity.filter.CustomJwtFilter;
 import springboot.kakao_boot_camp.security.CustomSecurity.filter.CustomSessionFilter;
 
 @Configuration
 @Profile("custom-security")
 @RequiredArgsConstructor
 public class WebConfig {
-    private final CustomSessionFilter customSessionFilter;                      // 스프링 시큐리티 X, 세션 기반 인증 필터
+    private final JwtUtil jwtUtil;
+
+    @Value("${auth.type}")  // ← yml에 auth.type 있어야 함
+    private String authType;
 
 
     @Bean
-    public CustomPasswordEncoder customPasswordEncoder(){
-        return new CustomPasswordEncoder();
+    public FilterRegistrationBean<?> authFilter() {
+        if ("jwt".equalsIgnoreCase(authType)) {
+            return createJwtFilter();
+        } else if ("session".equalsIgnoreCase(authType)) {
+            return createSessionFilter();
+        }
+        throw new IllegalArgumentException("존재하지 않는 필터입니다. (yml-auth-type 확인 필요)");  // ← 둘 다 아닐 때만 실행
     }
 
-    @Bean
-    public FilterRegistrationBean<CustomSessionFilter> sessionFilter() {
+    public FilterRegistrationBean<CustomSessionFilter> createSessionFilter() {
+        CustomSessionFilter customSessionFilter = new CustomSessionFilter();
         FilterRegistrationBean<CustomSessionFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(customSessionFilter);
+        bean.addUrlPatterns("/api/*");
+        bean.setOrder(1);
+        return bean;
+    }
+
+
+    public FilterRegistrationBean<CustomJwtFilter> createJwtFilter() {
+        CustomJwtFilter customJwtFilter = new CustomJwtFilter(jwtUtil);
+        FilterRegistrationBean<CustomJwtFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(customJwtFilter);
         bean.addUrlPatterns("/api/*");
         bean.setOrder(1);
         return bean;
