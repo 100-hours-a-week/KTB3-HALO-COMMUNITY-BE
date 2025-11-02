@@ -32,6 +32,7 @@ public class LoginService {
         try {
             var auth = authenticationManagerBuilder.getObject().authenticate(token);
 
+
             JwtAuthManager.TokenPair tokenPair = jwtAuthManager.createTokens(auth);
 
 

@@ -13,6 +13,13 @@ public record LoginRes(
                 accessToken,
                 refreshToken
         );
+    }
 
+    public static LoginRes fromWithoutRefreshToken(Long userId, String accessToken) {
+        return new LoginRes(
+                userId,
+                accessToken,
+                null
+        );
     }
 }

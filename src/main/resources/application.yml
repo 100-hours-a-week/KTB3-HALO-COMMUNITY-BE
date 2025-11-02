@@ -51,10 +51,10 @@ auth:
 
 jwt:
   access:
-    secret: aGVsbG93b3JsZGhlbGxvd29ybGRoZWxsb3dvcmxkaGVsbG93b3JsZGhlbGxvd29ybGQ
+    secret: c2NhcmVkYWdlZmVhdGhlcnNwbGVudHlyZWFkeWVhdHByaW5jaXBhbHJpc2Vwcm9iYWI=
     expiration: 900000  # 15분 = 15 * 60 * 1000
   refresh:
-    secret: cmVmcmVzaHNlY3JldGtleWZvcmp3dHRva2VucmVmcmVzaHNlY3JldGtleWZvcmp3dA
+    secret: d2hvbGVtYWlucG9yY2hsb29rZWFyZ3JlYXRseXNoaW5lcmVzdHRlbGxuZWVkbGVrZXA=
     expiration: 604800000  # 7일 = 7 * 24 * 60 * 60 * 1000
 
 

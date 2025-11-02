@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import io.jsonwebtoken.Claims;
@@ -60,6 +61,7 @@ public class JwtUtil {
                 .collect(Collectors.joining(","));
 
         return Jwts.builder()
+                .setId(UUID.randomUUID().toString())  // <-- jti 추가
                 .claim("userId", user.getId())
                 .claim("email", user.getUsername())
                 .claim("role", authorities)
@@ -73,7 +75,7 @@ public class JwtUtil {
         return extractToken( token, accessKey);
     }
     // Refresh Token 파싱
-    public Claims extractRefreshToken(HttpServletRequest request,String token) {
+    public Claims extractRefreshToken(String token) {
         return extractToken( token, refreshKey);
     }
     // 공통 파싱 로직
@@ -88,7 +90,10 @@ public class JwtUtil {
         // 토큰 만료 예외를 커스텀 예외로 던짐
         throw new JwtTokenExpiredException();
     } catch (JwtException | IllegalArgumentException e) {
-        // 잘못된 토큰 예외를 커스텀 예외로 던짐
+        // 잘못된 토큰 예외를 커스텀 예외로
+        System.out.println("JWT Parsing Error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+        e.printStackTrace();
+
         throw new InvalidTokenTypeException();
     }
 }

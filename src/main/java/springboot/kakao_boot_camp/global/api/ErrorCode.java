@@ -11,12 +11,13 @@ public enum ErrorCode {
     // -- Auth
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청 인자입니다."),                          // 400 회원 가입
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "중복된 이메일 입니다."),                           // 409 회원 가입
-    AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 잘 못 되었습니다.") ,  // 401 로그인
+    AUTHENTICATION_FAILED(HttpStatus.UNAUTHORIZED, "아이디 또는 비밀번호가 잘 못 되었습니다."),  // 401 로그인
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, "로그인이 필요합니다."),
 
     // -- JWT --
     TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED, "로그인 토큰이 만료되었습니다. 다시 로그인해주세요."),
     INVALID_TOKEN_TYPE(HttpStatus.UNAUTHORIZED, "유효하지 않은 토큰 형식입니다. 다시 로그인해주세요."),
+    TOKEN_LOGOUTED(HttpStatus.UNAUTHORIZED, "이미 로그아웃된 토큰입니다."),
 
     // -- SESSION --
     SESSION_EXPIRED(HttpStatus.UNAUTHORIZED, "세션이 만료되었습니다. 다시 로그인해주세요."),
@@ -32,7 +33,6 @@ public enum ErrorCode {
 
     // --  Comment --
     COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 댓글 찾을 수 없습니다.");                     //404
-
 
 
     private final HttpStatus status;

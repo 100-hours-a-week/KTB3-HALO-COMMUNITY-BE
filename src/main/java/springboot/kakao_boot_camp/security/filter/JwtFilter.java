@@ -22,6 +22,7 @@ import springboot.kakao_boot_camp.domain.auth.util.JwtUtil;
 import springboot.kakao_boot_camp.global.api.ErrorCode;
 import springboot.kakao_boot_camp.security.CustomUserDetails;
 import springboot.kakao_boot_camp.security.handler.CustomAuthenticationEntryPoint;
+import springboot.kakao_boot_camp.domain.auth.Manager.login.jwt.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -31,6 +32,8 @@ import java.util.Arrays;
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
+    private final TokenBlacklistManager tokenBlacklistManager;
+
 
     private String USER_ID_KEY = "userId";
     private String EMAIL_KEY = "email";
@@ -62,6 +65,17 @@ public class JwtFilter extends OncePerRequestFilter {
         try {
             // 3. 토큰 까서 claims 획득
             Claims claims = jwtUtil.extractAccessToken(token);    // 토큰 까기 (토큰 진위여부 검증 해당 메서드에서 진행)
+
+            // 4. 블랙리스트 체크
+            String jti = claims.getId();
+            if (jti != null && tokenBlacklistManager.isBlacklisted(jti)) {
+                request.setAttribute("exception", ErrorCode.TOKEN_LOGOUTED);
+                customAuthenticationEntryPoint.commence(request, response, new AuthenticationException("Token logged out") {
+                });
+                return;
+            }
+
+            //5. 블랙리스트 아닐 시, claim 페이로드 값 반환
             Long userId = claims.get("userId", Number.class).longValue();
             String email = claims.get("email").toString();
             var authorities = Arrays.stream(
@@ -69,7 +83,9 @@ public class JwtFilter extends OncePerRequestFilter {
             ).map(SimpleGrantedAuthority::new).toList();
 
 
-            // 4. 인증 정보 저장 = SecurityContextHolder에 등록
+
+
+            // 6. 인증 정보 저장 = SecurityContextHolder에 등록
             CustomUserDetails customUserDetails = CustomUserDetails.from(userId, email, authorities);
             var auth = new UsernamePasswordAuthenticationToken(
                     customUserDetails, null, customUserDetails.getAuthorities());
@@ -89,7 +105,7 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
 
-        // 5. 다음 필터로 진행
+        // 7. 다음 필터로 진행
         filterChain.doFilter(request, response);
     }
 
