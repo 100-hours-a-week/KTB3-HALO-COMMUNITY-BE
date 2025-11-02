@@ -3,8 +3,6 @@ package springboot.kakao_boot_camp.domain.auth.service;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLoginReq;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLoginRes;
@@ -21,7 +19,6 @@ public class LoginService {
     private final UserRepository userRepository;
 //    private final PasswordEncoder passwordEncoder;
     private final CustomPasswordEncoder customPasswordEncoder;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final SessionAuthManager sessionManager;
 
 

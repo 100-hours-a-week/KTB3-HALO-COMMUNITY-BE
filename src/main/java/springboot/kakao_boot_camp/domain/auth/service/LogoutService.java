@@ -1,11 +1,20 @@
 package springboot.kakao_boot_camp.domain.auth.service;
 
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import springboot.kakao_boot_camp.global.manager.session.SessionAuthManager;
 
 @Service
+@RequiredArgsConstructor
 public class LogoutService {
 
-    // LogoutService에서 처리
-        // 1. 현재 유저 ID 얻고
-        // 2. 해당 ID 사용해서 세션 정보 레디스에서 삭제
+    private final SessionAuthManager sessionManager;
+
+    public void sessionLogout(HttpServletRequest request, HttpServletResponse response) {
+        // 세션과 관련 쿠키 삭제
+        sessionManager.delete(request, response);
+    }
 }
