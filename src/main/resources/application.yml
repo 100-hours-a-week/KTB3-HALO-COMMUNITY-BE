@@ -22,8 +22,7 @@ spring:
       org.springframework.web: DEBUG
       org.springframework.security: DEBUG
 
-  profiles:
-    active: custom-security  # 또는 spring-security
+
 
   session:
     store-type: redis

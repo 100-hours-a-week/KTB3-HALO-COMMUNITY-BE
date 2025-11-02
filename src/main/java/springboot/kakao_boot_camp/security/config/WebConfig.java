@@ -16,7 +16,6 @@ import springboot.kakao_boot_camp.domain.auth.util.CustomPasswordEncoder;
 import springboot.kakao_boot_camp.security.CustomSecurity.filter.CustomSessionFilter;
 
 @Configuration
-@Profile("custom-security")
 @RequiredArgsConstructor
 public class WebConfig {
     private final CustomSessionFilter customSessionFilter;                      // 스프링 시큐리티 X, 세션 기반 인증 필터
@@ -29,6 +28,7 @@ public class WebConfig {
 
     @Bean
     public FilterRegistrationBean<CustomSessionFilter> sessionFilter() {
+
         FilterRegistrationBean<CustomSessionFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(customSessionFilter);
         bean.addUrlPatterns("/api/*");
@@ -36,17 +36,17 @@ public class WebConfig {
         return bean;
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration config = new CorsConfiguration();
-//        config.setAllowCredentials(true);
-//        config.addAllowedOrigin("http://localhost:3000");
-//        config.addAllowedHeader("*");
-//        config.addAllowedMethod("*");
-//        config.setMaxAge(3600L);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", config);
-//        return source;
-//    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowCredentials(true);
+        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        config.setMaxAge(3600L);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
 }

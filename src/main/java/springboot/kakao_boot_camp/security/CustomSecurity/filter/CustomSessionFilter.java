@@ -17,7 +17,6 @@ import springboot.kakao_boot_camp.security.CustomSecurity.authentication.token.C
 
 import java.io.IOException;
 
-
 @Component
 public class CustomSessionFilter extends OncePerRequestFilter {
 

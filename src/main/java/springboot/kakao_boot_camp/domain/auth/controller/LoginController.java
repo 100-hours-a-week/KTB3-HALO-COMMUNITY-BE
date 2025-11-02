@@ -22,7 +22,7 @@ public class LoginController {
 
     private final LoginService loginService;
 
-    @PostMapping("/session")
+    @PostMapping
     public ResponseEntity<ApiResponse<SessionLoginRes>> sessionLogin(@RequestBody @Valid SessionLoginReq req,  HttpServletRequest servletRequest) {
         SessionLoginRes res = loginService.sessionLogin(req, servletRequest);
 
