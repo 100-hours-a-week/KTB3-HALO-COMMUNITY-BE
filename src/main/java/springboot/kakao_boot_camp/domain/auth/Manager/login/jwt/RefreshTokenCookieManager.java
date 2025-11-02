@@ -24,7 +24,7 @@ public class RefreshTokenCookieManager {
     }
 
     /**
-     * 로그아웃 시 쿠키 제거
+     * 로그아웃 시 쿠키 제거ㅌ
      */
     public void clearRefreshTokenCookie(HttpServletResponse response) {
         Cookie refreshCookie = new Cookie(COOKIE_NAME, null);
