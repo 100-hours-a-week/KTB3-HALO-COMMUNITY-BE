@@ -13,6 +13,7 @@ public enum SuccessCode {
     REGISTER_SUCCESS(HttpStatus.OK, "회원가입을 성공하였습니다."),
     LOGIN_SUCCESS(HttpStatus.OK, "로그인에 성공했습니다"),
     LOGOUT_SUCCESS(HttpStatus.OK, "로그아웃에 성공했습니다"),
+    TOKEN_REFERSH_SUCCESS(HttpStatus.OK, "JWT Refresh 성공"),
 
 
     // -- User --

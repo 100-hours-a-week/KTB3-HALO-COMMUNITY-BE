@@ -2,6 +2,7 @@ package springboot.kakao_boot_camp.domain.auth.Manager.login.jwt;
 
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Component;
 
@@ -34,5 +35,18 @@ public class RefreshTokenCookieManager {
         refreshCookie.setPath("/");
         refreshCookie.setMaxAge(0);  // 즉시 삭제
         response.addCookie(refreshCookie);
+    }
+
+
+    public String getRefreshTokenFromCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) return null;
+
+        for (Cookie cookie : cookies) {
+            if (COOKIE_NAME.equals(cookie.getName())) {
+                return cookie.getValue();
+            }
+        }
+        return null; // 없으면 null 반환
     }
 }

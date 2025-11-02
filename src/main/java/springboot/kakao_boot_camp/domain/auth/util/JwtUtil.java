@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
+
 import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.UUID;
@@ -57,7 +58,7 @@ public class JwtUtil {
         CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
 
         String authorities = auth.getAuthorities().stream()                 //getAuthorities -> List<auth객체> return
-                .map(a->a.getAuthority())   // getAuthority() -> String return
+                .map(a -> a.getAuthority())   // getAuthority() -> String return
                 .collect(Collectors.joining(","));
 
         return Jwts.builder()
@@ -70,33 +71,55 @@ public class JwtUtil {
                 .signWith(key)
                 .compact();
     }
+
     // Access Token 파싱
-    public  Claims  extractAccessToken(String token) {
-        return extractToken( token, accessKey);
+    public Claims extractAccessToken(String token) {
+        return extractToken(token, accessKey);
     }
+
     // Refresh Token 파싱
     public Claims extractRefreshToken(String token) {
-        return extractToken( token, refreshKey);
+        return extractToken(token, refreshKey);
     }
+
     // 공통 파싱 로직
     public static Claims extractToken(String token, SecretKey key) {
-    try {
-        return Jwts.parser()
-                .verifyWith(key)
-                .build()
-                .parseSignedClaims(token)
-                .getPayload();
-    } catch (ExpiredJwtException e) {
-        // 토큰 만료 예외를 커스텀 예외로 던짐
-        throw new JwtTokenExpiredException();
-    } catch (JwtException | IllegalArgumentException e) {
-        // 잘못된 토큰 예외를 커스텀 예외로
-        System.out.println("JWT Parsing Error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
-        e.printStackTrace();
+        try {
+            return Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
+        } catch (ExpiredJwtException e) {
+            // 토큰 만료 예외를 커스텀 예외로 던짐
+            throw new JwtTokenExpiredException();
+        } catch (JwtException | IllegalArgumentException e) {
+            // 잘못된 토큰 예외를 커스텀 예외로
+            System.out.println("JWT Parsing Error: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+            e.printStackTrace();
 
-        throw new InvalidTokenTypeException();
+            throw new InvalidTokenTypeException();
+        }
+
     }
-}
+
+    // 토큰 유효성 검증 (Access / Refresh 구분)
+    public boolean validateToken(String token, boolean isAccessToken) {
+        try {
+            if (isAccessToken) {
+                extractAccessToken(token);
+            } else {
+                extractRefreshToken(token);
+            }
+            return true; // 예외가 안 나면 유효
+        } catch (JwtTokenExpiredException e) {
+            System.out.println("토큰 만료: " + e.getMessage());
+            return false;
+        } catch (InvalidTokenTypeException | JwtException e) {
+            System.out.println("유효하지 않은 토큰: " + e.getMessage());
+            return false;
+        }
+    }
 
 }
 
