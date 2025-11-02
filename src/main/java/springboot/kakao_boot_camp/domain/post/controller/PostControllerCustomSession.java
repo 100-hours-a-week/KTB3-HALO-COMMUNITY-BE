@@ -23,7 +23,7 @@ public class PostControllerCustomSession {
     private final PostService postService;
 
 
-    // -- C --
+    // -- Create --
     @PostMapping
     public ResponseEntity<ApiResponse<PostCreateRes>> create(@RequestBody @Valid PostCreateReq req) {
         CustomAuthentication auth = CustomSecurityContextHolder.getContext().getAuthentication();
