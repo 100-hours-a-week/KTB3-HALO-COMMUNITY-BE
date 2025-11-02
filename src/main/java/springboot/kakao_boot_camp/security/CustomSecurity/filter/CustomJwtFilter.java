@@ -33,7 +33,7 @@ public class CustomJwtFilter extends OncePerRequestFilter {
 
         // 0. 로그인 및 회원가입 제외
         String uri = request.getRequestURI();
-        if (uri.startsWith("/api/v1/auth/")) {
+        if (uri.startsWith("/api/v1/auth/login") || uri.startsWith("/api/v1/auth/signup")) {
             filterChain.doFilter(request, response);
             return;
         }
