@@ -4,6 +4,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -15,6 +16,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import springboot.kakao_boot_camp.domain.auth.exception.InvalidTokenTypeException;
 import springboot.kakao_boot_camp.domain.auth.exception.JwtTokenExpiredException;
+import springboot.kakao_boot_camp.global.api.ErrorCode;
 import springboot.kakao_boot_camp.security.CustomUserDetails;
 
 
@@ -68,26 +70,29 @@ public class JwtUtil {
     }
     // Access Token 파싱
     public  Claims  extractAccessToken(String token) {
-        return extractToken(token, accessKey);
+        return extractToken( token, accessKey);
     }
     // Refresh Token 파싱
-    public Claims extractRefreshToken(String token) {
-        return extractToken(token, refreshKey);
+    public Claims extractRefreshToken(HttpServletRequest request,String token) {
+        return extractToken( token, refreshKey);
     }
     // 공통 파싱 로직
-    public  static Claims extractToken(String token, SecretKey key) {
-        try {
-            return Jwts.parser()
-                    .verifyWith(key)
-                    .build()
-                    .parseSignedClaims(token)
-                    .getPayload();
-        } catch (ExpiredJwtException e) {
-            throw new JwtTokenExpiredException();
-        } catch (JwtException | IllegalArgumentException e) {
-            throw new InvalidTokenTypeException();
-        }
+    public static Claims extractToken(String token, SecretKey key) {
+    try {
+        return Jwts.parser()
+                .verifyWith(key)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
+    } catch (ExpiredJwtException e) {
+        // 토큰 만료 예외를 커스텀 예외로 던짐
+        throw new JwtTokenExpiredException();
+    } catch (JwtException | IllegalArgumentException e) {
+        // 잘못된 토큰 예외를 커스텀 예외로 던짐
+        throw new InvalidTokenTypeException();
     }
+}
+
 }
 
 

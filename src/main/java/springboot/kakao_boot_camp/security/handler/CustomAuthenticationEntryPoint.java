@@ -17,16 +17,21 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
-    public void commence(HttpServletRequest request,
-                         HttpServletResponse response,
-                         AuthenticationException authException) throws IOException {
+public void commence(HttpServletRequest request,
+                     HttpServletResponse response,
+                     AuthenticationException authException) throws IOException {
 
-        ApiResponse<?> errorResponse = ApiResponse.error(ErrorCode.UNAUTHORIZED);
-
-        response.setStatus(ErrorCode.UNAUTHORIZED.getStatus().value());
-        response.setContentType("application/json;charset=UTF-8");
-
-        String json = objectMapper.writeValueAsString(errorResponse);
-        response.getWriter().write(json);
+    // request에 담긴 예외 코드 확인
+    ErrorCode errorCode = (ErrorCode) request.getAttribute("exception");
+    if (errorCode == null) {
+        errorCode = ErrorCode.UNAUTHORIZED; // 기본값
     }
+
+    ApiResponse<?> errorResponse = ApiResponse.error(errorCode);
+
+    response.setStatus(errorCode.getStatus().value());
+    response.setContentType("application/json;charset=UTF-8");
+    response.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+}
+
 }

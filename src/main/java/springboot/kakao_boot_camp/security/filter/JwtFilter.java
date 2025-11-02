@@ -10,13 +10,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import springboot.kakao_boot_camp.domain.auth.exception.InvalidTokenTypeException;
+import springboot.kakao_boot_camp.domain.auth.exception.JwtTokenExpiredException;
 import springboot.kakao_boot_camp.domain.auth.util.JwtUtil;
+import springboot.kakao_boot_camp.global.api.ErrorCode;
 import springboot.kakao_boot_camp.security.CustomUserDetails;
+import springboot.kakao_boot_camp.security.handler.CustomAuthenticationEntryPoint;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -25,6 +30,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     private String USER_ID_KEY = "userId";
     private String EMAIL_KEY = "email";
@@ -53,21 +59,34 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        // 3. 토큰 까서 claims 획득
-        Claims claims = jwtUtil.extractAccessToken(token);    // 토큰 까기 (토큰 진위여부 검증 해당 메서드에서 진행)
-        Long userId = claims.get("userId", Number.class).longValue();
-        String email = claims.get("email").toString();
-        var authorities = Arrays.stream(
-                claims.get("role").toString().split(",")
-        ).map(SimpleGrantedAuthority::new).toList();
+        try {
+            // 3. 토큰 까서 claims 획득
+            Claims claims = jwtUtil.extractAccessToken(token);    // 토큰 까기 (토큰 진위여부 검증 해당 메서드에서 진행)
+            Long userId = claims.get("userId", Number.class).longValue();
+            String email = claims.get("email").toString();
+            var authorities = Arrays.stream(
+                    claims.get("role").toString().split(",")
+            ).map(SimpleGrantedAuthority::new).toList();
 
 
-        // 4. 인증 정보 저장 = SecurityContextHolder에 등록
-        CustomUserDetails customUserDetails = CustomUserDetails.from(userId, email, authorities);
-        var auth = new UsernamePasswordAuthenticationToken(
-                customUserDetails, null, customUserDetails.getAuthorities());
-        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));     // 추가 정보 저장 (어디서 접속했는지)
-        SecurityContextHolder.getContext().setAuthentication(auth);
+            // 4. 인증 정보 저장 = SecurityContextHolder에 등록
+            CustomUserDetails customUserDetails = CustomUserDetails.from(userId, email, authorities);
+            var auth = new UsernamePasswordAuthenticationToken(
+                    customUserDetails, null, customUserDetails.getAuthorities());
+            auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));     // 추가 정보 저장 (어디서 접속했는지)
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+        } catch (JwtTokenExpiredException e) {
+            request.setAttribute("exception", ErrorCode.TOKEN_EXPIRED);
+            customAuthenticationEntryPoint.commence(request, response, new AuthenticationException("Token expired") {
+            });
+            return;
+        } catch (InvalidTokenTypeException e) {
+            request.setAttribute("exception", ErrorCode.INVALID_TOKEN_TYPE);
+            customAuthenticationEntryPoint.commence(request, response, new AuthenticationException("Invalid token") {
+            });
+            return;
+        }
 
 
         // 5. 다음 필터로 진행
