@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.global.manager.session;
+package springboot.kakao_boot_camp.domain.auth.Manager.login.session;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

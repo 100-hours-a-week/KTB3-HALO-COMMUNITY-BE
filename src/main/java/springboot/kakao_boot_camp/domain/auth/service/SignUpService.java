@@ -2,9 +2,8 @@ package springboot.kakao_boot_camp.domain.auth.service;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.stereotype.Service;
-import springboot.kakao_boot_camp.domain.auth.Manager.SignUpManager;
+import springboot.kakao_boot_camp.domain.auth.Manager.signup.SignUpManager;
 import springboot.kakao_boot_camp.domain.auth.dto.signDtos.SignReq;
 import springboot.kakao_boot_camp.domain.auth.dto.signDtos.SignRes;
 import springboot.kakao_boot_camp.domain.auth.exception.DuplicateEmailException;
@@ -12,7 +11,6 @@ import springboot.kakao_boot_camp.domain.auth.util.CustomPasswordEncoder;
 import springboot.kakao_boot_camp.domain.user.UserRole;
 import springboot.kakao_boot_camp.domain.user.entity.User;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
-import org.springframework.security.crypto.password.PasswordEncoder;
 //import springboot.kakao_boot_camp.global.util.JwtUtil;
 
 import java.time.LocalDateTime;
@@ -25,7 +23,6 @@ public class SignUpService {      //Dto로 컨트롤러에서 받음
     private final UserRepository userRepo;
 //    private final PasswordEncoder passwordEncoder;
     private final CustomPasswordEncoder passwordEncoder;
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final SignUpManager signUpManager;
 
     public SignRes signUp(SignReq req) throws RuntimeException {
