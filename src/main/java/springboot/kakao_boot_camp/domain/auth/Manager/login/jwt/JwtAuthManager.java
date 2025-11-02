@@ -1,10 +1,9 @@
 package springboot.kakao_boot_camp.domain.auth.Manager.login.jwt;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import springboot.kakao_boot_camp.domain.auth.util.JwtUtil;
-import springboot.kakao_boot_camp.security.CustomSecurity.authentication.CustomAuthentication;
-import springboot.kakao_boot_camp.security.CustomSecurity.authentication.token.CustomAuthenticationToken;
 
 
 @Component
@@ -12,7 +11,7 @@ import springboot.kakao_boot_camp.security.CustomSecurity.authentication.token.C
 public class JwtAuthManager {
     private final JwtUtil jwtUtil;
 
-    public TokenPair createTokens(CustomAuthentication token){
+    public TokenPair createTokens(Authentication token){
         String accessToken = jwtUtil.createAccessToken(token);
         String refreshToken = jwtUtil.createRefreshToken(token);
 

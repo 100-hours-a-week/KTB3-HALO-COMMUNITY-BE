@@ -8,7 +8,7 @@
 //import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RestController;
 //import springboot.kakao_boot_camp.global.api.ApiResponse;
-//import springboot.kakao_boot_camp.security.CustomAuthUser;
+//import springboot.kakao_boot_camp.security.CustomUserDetails;
 //
 //@RestController
 //@RequestMapping("/api/v1/auth/logout")
@@ -18,7 +18,7 @@
 //
 //
 //    @PostMapping("/session")
-//    public ResponseEntity<ApiResponse<void>> sessionLogout(HttpServletRequest req, @AuthenticationPrincipal CustomAuthUser currentUser){
+//    public ResponseEntity<ApiResponse<void>> sessionLogout(HttpServletRequest req, @AuthenticationPrincipal CustomUserDetails currentUser){
 //
 //
 //

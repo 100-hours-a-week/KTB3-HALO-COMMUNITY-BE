@@ -5,17 +5,17 @@ import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import javax.crypto.SecretKey;
 import java.util.Date;
+import java.util.stream.Collectors;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import springboot.kakao_boot_camp.domain.auth.exception.InvalidTokenTypeException;
 import springboot.kakao_boot_camp.domain.auth.exception.JwtTokenExpiredException;
-import springboot.kakao_boot_camp.security.CustomSecurity.authentication.CustomAuthentication;
-import springboot.kakao_boot_camp.security.CustomSecurity.authentication.principal.CustomAuthUserWithoutSpringScurity;
-
-
+import springboot.kakao_boot_camp.security.CustomUserDetails;
 
 
 @Component
@@ -40,30 +40,34 @@ public class JwtUtil {
     }
 
     // Access Token 생성
-    public String createAccessToken(CustomAuthentication auth) {
+    public String createAccessToken(Authentication auth) {
         return createToken(auth, accessKey, accessTtl);
     }
 
     // Refresh Token 생성
-    public String createRefreshToken(CustomAuthentication auth) {
+    public String createRefreshToken(Authentication auth) {
         return createToken(auth, refreshKey, refreshTtl);
     }
 
     // 공통 토큰 생성 로직
-    private String createToken(CustomAuthentication auth, SecretKey key, long ttl) {
-        CustomAuthUserWithoutSpringScurity user = (CustomAuthUserWithoutSpringScurity) auth.getPrincipal();
+    private String createToken(Authentication auth, SecretKey key, long ttl) {
+        CustomUserDetails user = (CustomUserDetails) auth.getPrincipal();
+
+        String authorities = auth.getAuthorities().stream()                 //getAuthorities -> List<auth객체> return
+                .map(a->a.getAuthority())   // getAuthority() -> String return
+                .collect(Collectors.joining(","));
 
         return Jwts.builder()
-                .claim("userId", user.getUserId())
-                .claim("email", user.getEmail())
-                .claim("role", user.getRole())
+                .claim("userId", user.getId())
+                .claim("email", user.getUsername())
+                .claim("role", authorities)
                 .issuedAt(new Date())
                 .expiration(new Date(System.currentTimeMillis() + ttl))
                 .signWith(key)
                 .compact();
     }
     // Access Token 파싱
-    public Claims extractAccessToken(String token) {
+    public  Claims  extractAccessToken(String token) {
         return extractToken(token, accessKey);
     }
     // Refresh Token 파싱
@@ -71,7 +75,7 @@ public class JwtUtil {
         return extractToken(token, refreshKey);
     }
     // 공통 파싱 로직
-    private Claims extractToken(String token, SecretKey key) {
+    public  static Claims extractToken(String token, SecretKey key) {
         try {
             return Jwts.parser()
                     .verifyWith(key)
