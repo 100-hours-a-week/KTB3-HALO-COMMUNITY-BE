@@ -32,7 +32,7 @@ public class LoginController {
             HttpServletResponse servletResponse) {
 
         // 1. 액세스 토큰 포함 DTO 생성
-        LoginRes res = loginService.jwtLogin(req, servletRequest);
+        LoginRes res = loginService.login(req, servletRequest);
 
         // 2. 리프레시 토큰 포함
         refreshTokenCookieManager.addRefreshTokenCookie(servletResponse, res.refreshToken());
