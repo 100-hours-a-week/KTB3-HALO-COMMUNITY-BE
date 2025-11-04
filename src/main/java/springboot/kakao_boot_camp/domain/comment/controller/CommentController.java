@@ -21,6 +21,7 @@ public class CommentController {
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<ApiResponse<CommentCreateRes>> create(@PathVariable Long postId,
                                                                 @RequestBody CommentCreateReq commentCreateReq, @AuthenticationPrincipal CustomUserDetails currentUser) {
+        CommentCreateRes res = commentService.createComment(currentUser.getId(), postId, commentCreateReq);
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success(SuccessCode.COMMENT_CREATE_SUCCESS, res));
