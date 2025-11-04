@@ -7,7 +7,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springboot.kakao_boot_camp.domain.comment.dto.CommentDtos.*;
+import springboot.kakao_boot_camp.domain.comment.dto.create.CommentCreateReq;
+import springboot.kakao_boot_camp.domain.comment.dto.create.CommentCreateRes;
+import springboot.kakao_boot_camp.domain.comment.dto.delete.CommentDeleteRes;
+import springboot.kakao_boot_camp.domain.comment.dto.read.CommentDetailRes;
+import springboot.kakao_boot_camp.domain.comment.dto.read.CommentListRes;
+import springboot.kakao_boot_camp.domain.comment.dto.update.CommentUpdateReq;
+import springboot.kakao_boot_camp.domain.comment.dto.update.CommentUpdateRes;
 import springboot.kakao_boot_camp.domain.comment.entity.Comment;
 import springboot.kakao_boot_camp.domain.comment.exception.CommentNotFoundException;
 import springboot.kakao_boot_camp.domain.comment.repository.CommentRepository;
@@ -31,19 +37,26 @@ public class CommentService {
 
 
     // -- C --
-    public CommentCreateRes createComment(Long userId ,Long postId, CommentCreateReq commentCreateReq) {
+    public CommentCreateRes createComment(Long userId, Long postId, CommentCreateReq req) {
 
-        User user =userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
-
 
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
 
+        Comment parent = null;
+
+        if (req.parentId() != null) {
+            parent = commentRepository.findById(req.parentId())
+                    .orElseThrow(CommentNotFoundException::new);
+        }
+
         Comment comment = Comment.builder()
                 .user(user)
+                .parent(parent)
                 .post(post)
-                .content(commentCreateReq.content())
+                .content(req.content())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -63,6 +76,7 @@ public class CommentService {
         List<CommentListRes.CommentSummary> commentList = commentPage.getContent().stream()
                 .map(comment -> CommentListRes.CommentSummary.of(
                         comment.getId(),
+                        comment.getParent() != null ? comment.getParent().getId() : null,
                         comment.getUser().getNickName(),
                         comment.getUser().getProfileImage(),
                         comment.getContent(),
@@ -75,6 +89,7 @@ public class CommentService {
 
         return CommentListRes.of(commentList, pageInfo);
     }
+
     @Transactional(readOnly = true)
     public CommentDetailRes getCommentDetail(Long commentId) {
         Comment comment = commentRepository.findById(commentId)

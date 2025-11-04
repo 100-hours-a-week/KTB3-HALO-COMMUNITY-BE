@@ -44,7 +44,7 @@ public class SignUpService {      //Dto로 컨트롤러에서 받음
                 .email(req.email())
                 .passWord(passwordEncoder.encode(req.passWord()))
                 .nickName(req.nickName())
-                .profileImage(req.profileImage())
+                .profileImage(null)
                 .role(userRole)
                 .posts(null)
                 .createdAt(LocalDateTime.now())

@@ -5,7 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import springboot.kakao_boot_camp.domain.comment.dto.CommentDtos.*;
+import springboot.kakao_boot_camp.domain.comment.dto.create.CommentCreateReq;
+import springboot.kakao_boot_camp.domain.comment.dto.create.CommentCreateRes;
+import springboot.kakao_boot_camp.domain.comment.dto.delete.CommentDeleteRes;
+import springboot.kakao_boot_camp.domain.comment.dto.read.CommentDetailRes;
+import springboot.kakao_boot_camp.domain.comment.dto.read.CommentListRes;
+import springboot.kakao_boot_camp.domain.comment.dto.update.CommentUpdateReq;
+import springboot.kakao_boot_camp.domain.comment.dto.update.CommentUpdateRes;
 import springboot.kakao_boot_camp.domain.comment.service.CommentService;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
 import springboot.kakao_boot_camp.global.api.SuccessCode;
@@ -26,7 +32,6 @@ public class CommentController {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(ApiResponse.success(SuccessCode.COMMENT_CREATE_SUCCESS, res));
     }
-
 
     // -- 2. 댓글 조회 --
     @GetMapping("/posts/{postId}/comments")

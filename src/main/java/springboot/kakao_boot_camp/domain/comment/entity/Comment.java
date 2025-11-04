@@ -21,6 +21,10 @@ public class Comment {
     @Column(name = "comment_id")
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "parent_comment_id")
+    private Comment parent;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
