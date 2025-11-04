@@ -27,7 +27,6 @@ public class CommentController {
                 .body(ApiResponse.success(SuccessCode.COMMENT_CREATE_SUCCESS, res));
     }
 
-
     // -- 2. 댓글 조회 --
     @GetMapping("/posts/{postId}/comments")
     public ResponseEntity<ApiResponse<CommentListRes>> getCommentList(@PathVariable Long postId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
@@ -39,6 +38,7 @@ public class CommentController {
 
         return ResponseEntity.ok(ApiResponse.success(SuccessCode.COMMENT_LIST_READ_SUCCESS, res));
     }
+
     @GetMapping("/comments/{commentId}")
     public ResponseEntity<ApiResponse<CommentDetailRes>> getCommentDetail(@PathVariable Long commentId) {
         CommentDetailRes res = commentService.getCommentDetail(commentId);

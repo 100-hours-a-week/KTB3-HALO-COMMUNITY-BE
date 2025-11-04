@@ -31,19 +31,26 @@ public class CommentService {
 
 
     // -- C --
-    public CommentCreateRes createComment(Long userId ,Long postId, CommentCreateReq commentCreateReq) {
+    public CommentCreateRes createComment(Long userId, Long postId, CommentCreateReq req) {
 
-        User user =userRepository.findById(userId)
+        User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
-
 
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
 
+        Comment parent = null;
+
+        if (req.parentId() != null) {
+            parent = commentRepository.findById(req.parentId())
+                    .orElseThrow(CommentNotFoundException::new);
+        }
+
         Comment comment = Comment.builder()
                 .user(user)
+                .parent(parent)
                 .post(post)
-                .content(commentCreateReq.content())
+                .content(req.content())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -75,6 +82,7 @@ public class CommentService {
 
         return CommentListRes.of(commentList, pageInfo);
     }
+
     @Transactional(readOnly = true)
     public CommentDetailRes getCommentDetail(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
