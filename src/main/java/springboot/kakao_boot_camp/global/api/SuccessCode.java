@@ -13,7 +13,7 @@ public enum SuccessCode {
     REGISTER_SUCCESS(HttpStatus.CREATED, "회원가입을 성공하였습니다."),
     LOGIN_SUCCESS(HttpStatus.OK, "로그인에 성공했습니다"),
     LOGOUT_SUCCESS(HttpStatus.OK, "로그아웃에 성공했습니다"),
-    TOKEN_REFERSH_SUCCESS(HttpStatus.OK, "JWT Refresh 성공"),
+    TOKEN_REFERSH_SUCCESS(HttpStatus.OK, "액세스 토큰 재발급에 성공하였습니다."),
 
 
     // -- User --
@@ -27,7 +27,7 @@ public enum SuccessCode {
     POST_DELETE_SUCCESS(HttpStatus.OK, "게시글을 성공적으로 삭제하였습니다."),
 
     // -- Comment --
-    COMMENT_CREATE_SUCCESS(HttpStatus.CREATED, "게시글을 성공적으로 등록하였습니다."),
+    COMMENT_CREATE_SUCCESS(HttpStatus.CREATED, "댓글을 성공적으로 등록하였습니다."),
     COMMENT_LIST_READ_SUCCESS(HttpStatus.OK, "댓글 목록을 성공적으로 조회하였습니다."),
     COMMENT_LIST_EMPTY(HttpStatus.OK, "댓글이 없습니다."),
     COMMENT_READ_SUCCESS(HttpStatus.OK, "댓글을 성공적으로 조회하였습니다."),
