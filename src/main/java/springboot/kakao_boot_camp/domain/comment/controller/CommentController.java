@@ -38,7 +38,6 @@ public class CommentController {
 
         return ResponseEntity.ok(ApiResponse.success(SuccessCode.COMMENT_LIST_READ_SUCCESS, res));
     }
-
     @GetMapping("/comments/{commentId}")
     public ResponseEntity<ApiResponse<CommentDetailRes>> getCommentDetail(@PathVariable Long commentId) {
         CommentDetailRes res = commentService.getCommentDetail(commentId);

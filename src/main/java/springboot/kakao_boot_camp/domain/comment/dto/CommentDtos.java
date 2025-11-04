@@ -33,8 +33,8 @@ public class CommentDtos {
 
     // -- R --
     public record CommentListRes(
-        List<CommentSummary> comments,
-        PageInfo pageInfo
+            List<CommentSummary> comments,
+            PageInfo pageInfo
     ) {
         public static CommentListRes of(List<CommentSummary> comments, PageInfo pageInfo) {
             return new CommentListRes(comments, pageInfo);
@@ -43,6 +43,7 @@ public class CommentDtos {
         // 📝 댓글 요약 DTO
         public record CommentSummary(
                 Long commentId,
+                Long parentId,
                 String nickname,
                 String profileImageUrl,
                 String content,
@@ -51,46 +52,51 @@ public class CommentDtos {
         ) {
             public static CommentSummary of(
                     Long commentId,
+                    Long parentId,
                     String nickname,
                     String profileImageUrl,
                     String content,
                     LocalDateTime createdAt,
                     LocalDateTime updatedAt
             ) {
-                return new CommentSummary(commentId, nickname, profileImageUrl, content, createdAt, updatedAt);
+                return new CommentSummary(commentId, parentId, nickname, profileImageUrl, content, createdAt, updatedAt);
             }
         }
-        }
-    public record CommentDetailRes(
-        Long commentId,
-        Long postId,
-        Long userId,
-        String nickname,
-        String profileImageUrl,
-        String content,
-        LocalDateTime createdAt,
-        LocalDateTime updatedAt
-) {
-    public static CommentDetailRes of(Comment comment) {
-        return new CommentDetailRes(
-                comment.getId(),
-                comment.getPost().getId(),
-                comment.getUser().getId(),
-                comment.getUser().getNickName(),
-                comment.getUser().getProfileImage(),
-                comment.getContent(),
-                comment.getCreatedAt(),
-                comment.getUpdatedAt()
-        );
     }
-}
+    public record CommentDetailRes(
+            Long commentId,
+            Long parentId,
+            Long postId,
+            Long userId,
+            String nickname,
+            String profileImageUrl,
+            String content,
+            LocalDateTime createdAt,
+            LocalDateTime updatedAt
+    ) {
+        public static CommentDetailRes of(Comment comment) {
+            return new CommentDetailRes(
+                    comment.getId(),
+                    comment.getParent() != null ? comment.getParent().getId() : null,
+                    comment.getPost().getId(),
+                    comment.getUser().getId(),
+                    comment.getUser().getNickName(),
+                    comment.getUser().getProfileImage(),
+                    comment.getContent(),
+                    comment.getCreatedAt(),
+                    comment.getUpdatedAt()
+            );
+        }
+    }
 
     // -- U --
     public record CommentUpdateReq(
             String content
-    ) { }
+    ) {
+    }
     public record CommentUpdateRes(
             Long commentId,
+            Long parentId,
             String content,
             String nickname,
             String profileImage,
@@ -99,6 +105,7 @@ public class CommentDtos {
         public static CommentUpdateRes of(Comment comment) {
             return new CommentUpdateRes(
                     comment.getId(),
+                    comment.getParent() != null ? comment.getParent().getId() : null,
                     comment.getContent(),
                     comment.getUser().getNickName(),
                     comment.getUser().getProfileImage(),
@@ -109,14 +116,13 @@ public class CommentDtos {
 
     // -- D --
     public record CommentDeleteRes(
-        Long commentId,
-        LocalDateTime deletedAt
-) {
+            Long commentId,
+            LocalDateTime deletedAt
+    ) {
         public static CommentDeleteRes of(Long commentId, LocalDateTime deletedAt) {
             return new CommentDeleteRes(commentId, deletedAt);
         }
     }
-
 
 
 }
