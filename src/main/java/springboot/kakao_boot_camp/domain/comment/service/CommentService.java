@@ -31,9 +31,8 @@ public class CommentService {
 
 
     // -- C --
-    public CommentCreateRes createComment(Long postId, CommentCreateReq commentCreateReq) {
+    public CommentCreateRes createComment(Long userId ,Long postId, CommentCreateReq commentCreateReq) {
 
-        Long userId = 1L;
         User user =userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
@@ -76,7 +75,6 @@ public class CommentService {
 
         return CommentListRes.of(commentList, pageInfo);
     }
-
     @Transactional(readOnly = true)
     public CommentDetailRes getCommentDetail(Long commentId) {
         Comment comment = commentRepository.findById(commentId)
