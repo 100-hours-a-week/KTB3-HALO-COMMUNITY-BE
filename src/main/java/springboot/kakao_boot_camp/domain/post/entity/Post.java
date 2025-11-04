@@ -40,7 +40,7 @@ public class Post {
     int commentCount = 0;
 
     @CreatedDate
-    LocalDateTime cratedAt;
+    LocalDateTime createdAt;
 
     LocalDateTime updatedAt;
 

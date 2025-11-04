@@ -20,7 +20,6 @@ import springboot.kakao_boot_camp.domain.auth.service.SignUpService;
 @RestController     // v1, v2 같은 버전은 추후 버전 관리를 위해 필요한 것인데 해당 프로젝트는 학습용 이므로 추후에 유지 보수 예정 X -> 따라서 버전 명 명시 안할 예정
 @RequestMapping("/api/v1/auth/signup")
 public class SignUpController {
-
     private final SignUpService authService;
 
     @PostMapping
@@ -31,6 +30,4 @@ public class SignUpController {
                 .status(HttpStatus.OK)
                 .body(ApiResponse.success(SuccessCode.REGISTER_SUCCESS, res));
     }
-
-
 }

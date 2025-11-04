@@ -1,40 +1,49 @@
 package springboot.kakao_boot_camp.domain.auth.service;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLoginReq;
-import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.session.SessionLoginRes;
+import springboot.kakao_boot_camp.domain.auth.Manager.login.jwt.JwtAuthManager;
+import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.LoginReq;
+import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.LoginRes;
 import springboot.kakao_boot_camp.domain.auth.exception.InvalidLoginException;
-import springboot.kakao_boot_camp.domain.user.entity.User;
-import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
-import springboot.kakao_boot_camp.global.manager.session.SessionAuthManager;
+import springboot.kakao_boot_camp.security.CustomUserDetails;
 
 
 @Service
 @RequiredArgsConstructor
 public class LoginService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final JwtAuthManager jwtAuthManager;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
-    private final SessionAuthManager sessionManager;
 
 
+    // 1. jwt 기반 로그인
+    public LoginRes login(LoginReq req, HttpServletRequest servletReq) throws RuntimeException {
+
+        // 1. 토큰 생성
+        var token = new UsernamePasswordAuthenticationToken(req.email(), req.passWord());
+
+        // 2. 로그인 검증
+        try {
+            var auth = authenticationManagerBuilder.getObject().authenticate(token);
 
 
-    // 세션 + 쿠키 : 세션 발급 방식
-    public SessionLoginRes sessionLogin(SessionLoginReq req, HttpServletRequest servletReq) throws RuntimeException {
-
-        User user = userRepository.findByEmail(req.email())
-                .orElseThrow(() -> new InvalidLoginException());
-
-        sessionManager.create(servletReq, user);
+            JwtAuthManager.TokenPair tokenPair = jwtAuthManager.createTokens(auth);
 
 
-        return SessionLoginRes.from(user);
+            return LoginRes.from((CustomUserDetails) auth.getPrincipal(), tokenPair.accessToken(), tokenPair.refreshToken());
+
+        } catch (BadCredentialsException | UsernameNotFoundException e) {
+            throw new InvalidLoginException();
+        } catch (AuthenticationException e) {
+            throw new InvalidLoginException();
+        }
     }
 
 }
+

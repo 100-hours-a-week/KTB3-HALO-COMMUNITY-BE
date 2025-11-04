@@ -32,7 +32,10 @@ public class Comment {
     @Size(max = 1000)
     private String content;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
 

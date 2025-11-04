@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.domain.auth.Manager;
+package springboot.kakao_boot_camp.domain.auth.Manager.signup;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,5 @@ public class SignUpManager   {
         return false;
     }
 
-    public Set<SimpleGrantedAuthority> makeAuthorityList(UserRole role){
-        return Set.of(new SimpleGrantedAuthority(role.name()));
-    }
+
 }

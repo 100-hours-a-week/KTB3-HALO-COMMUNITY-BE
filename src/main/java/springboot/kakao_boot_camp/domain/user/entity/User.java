@@ -47,7 +47,8 @@ public class User {
     @Builder.Default
     private List<Post> posts = new ArrayList<>();       // 명시적인 형태
 
-    LocalDateTime cratedAt;
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
 
     LocalDateTime updatedAt;
 

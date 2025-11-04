@@ -46,7 +46,7 @@ public class PostServiceTest {
 
         // when
         PostCreateReq req = new PostCreateReq("제목", "내용", "이미지");
-        PostCreateRes res = postService.createPost(req);
+        PostCreateRes res = postService.createPost(1L,req);
 
 
         // then

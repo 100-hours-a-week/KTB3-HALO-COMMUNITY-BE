@@ -26,7 +26,9 @@ public class PostService {
     // -- Create Post --
     public PostCreateRes createPost(Long userId, PostCreateReq req) {
 
-
+        if (userId == null) {
+            throw new UserNotFoundException();
+        }
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
@@ -37,7 +39,7 @@ public class PostService {
         post.setUser(user);
         post.setContent(req.content());
         post.setImageUrl(req.imageUrl());
-        post.setCratedAt(LocalDateTime.now());
+        post.setCreatedAt(LocalDateTime.now());
         post.setUpdatedAt(LocalDateTime.now());
 
         Post saved = postRepository.save(post);
@@ -82,7 +84,7 @@ public class PostService {
                         post.getLikeCount(),
                         post.getCommentCount(),
                         post.getViewCount(),
-                        post.getCratedAt(),
+                        post.getCreatedAt(),
                         post.getUpdatedAt()
                 ))
                 .toList();
