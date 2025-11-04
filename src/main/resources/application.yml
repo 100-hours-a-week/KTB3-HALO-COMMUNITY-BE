@@ -9,20 +9,16 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: update   # 개발 중에는 create / create-drop / update 중 선택
+      ddl-auto: none
     properties:
       hibernate:
         format_sql: true
         use_sql_comments: true
-
-  logging:
-    level:
-      root: INFO
-      org.springframework.web: DEBUG
-      org.springframework.security: DEBUG
-
-  profiles:
-    active: custom-security  # 또는 spring-security
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    show-sql: true
+    open-in-view: false
 
   session:
     store-type: redis
@@ -35,28 +31,29 @@ spring:
       password: 'gustjq3735!'
       port: 6379
 
+  profiles:
+    active: custom-security
 
 server:
   port: 8080
   servlet:
     session:
       cookie:
-        name:
-          JSESSIONID
-
+        name: JSESSIONID
 
 auth:
-  type: session  # jwt or session
-
+  type: session
 
 jwt:
   access:
-    secret: aGVsbG93b3JsZGhlbGxvd29ybGRoZWxsb3dvcmxkaGVsbG93b3JsZGhlbGxvd29ybGQ
-    expiration: 900000  # 15분 = 15 * 60 * 1000
+    secret: c2NhcmVkYWdlZmVhdGhlcnNwbGVudHlyZWFkeWVhdHByaW5jaXBhbHJpc2Vwcm9iYWI=
+    expiration: 900000
   refresh:
-    secret: cmVmcmVzaHNlY3JldGtleWZvcmp3dHRva2VucmVmcmVzaHNlY3JldGtleWZvcmp3dA
-    expiration: 604800000  # 7일 = 7 * 24 * 60 * 60 * 1000
+    secret: d2hvbGVtYWlucG9yY2hsb29rZWFyZ3JlYXRseXNoaW5lcmVzdHRlbGxuZWVkbGVrZXA=
+    expiration: 604800000
 
-
-
-
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    org.springframework.security: DEBUG

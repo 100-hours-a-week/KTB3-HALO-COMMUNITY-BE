@@ -17,7 +17,7 @@ import springboot.kakao_boot_camp.global.api.SuccessCode;
 public class CommentController {
     private final CommentService commentService;
 
-    // -- C --
+    // -- 1. 댓글 생성 --
     @PostMapping("/posts/{postId}/comments")
     public ResponseEntity<ApiResponse<CommentCreateRes>> create(@PathVariable Long postId, @RequestBody CommentCreateReq commentCreateReq) {
         CommentCreateRes res = commentService.createComment(postId, commentCreateReq);
@@ -27,7 +27,7 @@ public class CommentController {
     }
 
 
-    // -- R --
+    // -- 2. 댓글 조회 --
     @GetMapping("/posts/{postId}/comments")
     public ResponseEntity<ApiResponse<CommentListRes>> getCommentList(@PathVariable Long postId, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "20") int size) {
         CommentListRes res = commentService.getCommentList(postId, page, size);
@@ -45,7 +45,7 @@ public class CommentController {
     }
 
 
-    // -- U --
+    // -- 3. 댓글 수정 --
     @PatchMapping("/comments/{commentId}")
     public ResponseEntity<ApiResponse<CommentUpdateRes>> updateComment(
             @PathVariable Long commentId,
@@ -56,7 +56,7 @@ public class CommentController {
     }
 
 
-    // -- D --
+    // -- 4. 댓글 삭제 --
     @DeleteMapping("/comments/{commentId}")
     public ResponseEntity<ApiResponse<CommentDeleteRes>> deleteComment(
             @PathVariable Long commentId
