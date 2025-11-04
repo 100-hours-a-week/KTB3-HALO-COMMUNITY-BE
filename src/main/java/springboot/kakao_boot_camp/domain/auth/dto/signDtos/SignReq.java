@@ -12,8 +12,7 @@ public record SignReq(
         @NonNull
         String passWord,
 
-        String nickName,
+        String nickName
 
-        String profileImage
 ) {
 }

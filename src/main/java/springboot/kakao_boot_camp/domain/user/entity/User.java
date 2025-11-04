@@ -36,7 +36,6 @@ public class User {
     private String nickName;
 
     @Column(nullable = false)
-    @NotBlank(message = "프로필 사진을 추가해주세요.")
     private String profileImage;
 
     @Enumerated(EnumType.STRING)
