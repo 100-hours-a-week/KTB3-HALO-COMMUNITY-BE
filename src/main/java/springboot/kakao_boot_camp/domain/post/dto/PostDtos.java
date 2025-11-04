@@ -33,7 +33,7 @@ public class PostDtos {
             post.getTitle(),
             post.getContent(),
             post.getImageUrl(),
-            post.getCratedAt()
+            post.getCreatedAt()
             );
         }
     }
@@ -112,7 +112,7 @@ public class PostDtos {
             post.getLikeCount(),
             post.getViewCount(),
             post.getCommentCount(),
-            post.getCratedAt(),
+            post.getCreatedAt(),
             post.getUpdatedAt()
             );
         }
@@ -148,7 +148,7 @@ public class PostDtos {
             post.getLikeCount(),
             post.getViewCount(),
             post.getCommentCount(),
-            post.getCratedAt(),
+            post.getCreatedAt(),
             post.getUpdatedAt()
             );
         }

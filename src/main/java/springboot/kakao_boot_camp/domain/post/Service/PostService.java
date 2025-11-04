@@ -39,7 +39,7 @@ public class PostService {
         post.setUser(user);
         post.setContent(req.content());
         post.setImageUrl(req.imageUrl());
-        post.setCratedAt(LocalDateTime.now());
+        post.setCreatedAt(LocalDateTime.now());
         post.setUpdatedAt(LocalDateTime.now());
 
         Post saved = postRepository.save(post);
@@ -84,7 +84,7 @@ public class PostService {
                         post.getLikeCount(),
                         post.getCommentCount(),
                         post.getViewCount(),
-                        post.getCratedAt(),
+                        post.getCreatedAt(),
                         post.getUpdatedAt()
                 ))
                 .toList();

@@ -47,7 +47,7 @@ public class SignUpService {      //Dto로 컨트롤러에서 받음
                 .profileImage(req.profileImage())
                 .role(userRole)
                 .posts(null)
-                .cratedAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
 
