@@ -39,7 +39,7 @@ public class MyUserDetailsService implements UserDetailsService {
         if (user.getRole() != null){
 
         }
-        if (user.getRole().equals(UserRole.ROLE_USER.name())) {
+        if (user.getRole().equals(UserRole.ROLE_USER)) {
             auth.add(new SimpleGrantedAuthority(UserRole.ROLE_USER.name()));
         }
         else if(user.getRole().equals(UserRole.ROLE_ADMIN)){

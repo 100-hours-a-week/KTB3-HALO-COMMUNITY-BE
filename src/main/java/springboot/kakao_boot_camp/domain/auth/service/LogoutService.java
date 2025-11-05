@@ -63,10 +63,10 @@ public class LogoutService {
                 } catch (Exception e) {
                     throw new AccessDeniedException("Invalid token structure");
                 }
-
                 if (!tokenUserId.equals(currentUser.getId())) {
                     throw new AccessDeniedException("Token does not belong to current user");
                 }
+
 
                 // 3.4 jti 및 만료시간 계산 후 블랙리스트 추가
                 String jti = claims.getId();
@@ -74,6 +74,7 @@ public class LogoutService {
                 if (jti != null && expMillis > 0) {
                     tokenBlacklistManager.add(jti, Instant.now().plusMillis(expMillis));
                 }
+
 
                 // 3.5 클라이언트 쿠키 제거
                 Cookie del = new Cookie("refreshToken", null);

@@ -55,16 +55,21 @@ public class JwtFilter extends OncePerRequestFilter {
         }
 
 
+
         // 2. 토큰 확인
         String token = resolveAccessToken(request);         // 토큰있는지 문자열 체크
-        if (token == null) { // 토큰 없으면 그냥 통과
+         if (token == null) { // 토큰 없으면 그냥 통과
             filterChain.doFilter(request, response);        // 넘어가요
             return;
         }
 
+
+
         try {
             // 3. 토큰 까서 claims 획득
             Claims claims = jwtUtil.extractAccessToken(token);    // 토큰 까기 (토큰 진위여부 검증 해당 메서드에서 진행)
+
+
 
             // 4. 블랙리스트 체크
             String jti = claims.getId();
@@ -75,13 +80,14 @@ public class JwtFilter extends OncePerRequestFilter {
                 return;
             }
 
+
+
             //5. 블랙리스트 아닐 시, claim 페이로드 값 반환
             Long userId = claims.get("userId", Number.class).longValue();
             String email = claims.get("email").toString();
             var authorities = Arrays.stream(
                     claims.get("role").toString().split(",")
             ).map(SimpleGrantedAuthority::new).toList();
-
 
 
 

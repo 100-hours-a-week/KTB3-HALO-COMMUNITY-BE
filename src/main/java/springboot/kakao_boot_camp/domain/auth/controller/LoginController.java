@@ -19,9 +19,9 @@ import springboot.kakao_boot_camp.domain.auth.service.LoginService;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
 import springboot.kakao_boot_camp.global.api.SuccessCode;
 
-@RestController
 @RequestMapping("/api/v1/auth/login")
 @RequiredArgsConstructor
+@RestController
 public class LoginController {
 
     private final LoginService loginService;
