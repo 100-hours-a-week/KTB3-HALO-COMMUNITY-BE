@@ -46,7 +46,6 @@ public class SignUpService {      //Dto로 컨트롤러에서 받음
                 .nickName(req.nickName())
                 .profileImage(null)
                 .role(userRole)
-                .posts(null)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
