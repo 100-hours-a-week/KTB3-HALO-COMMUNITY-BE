@@ -12,7 +12,7 @@ public record UserCreateReq(
         UserRole role
 ) {
     public UserCreateReq from(User user){
-        return new UserCreateRes(
+        return new UserCreateReq(
                 user.getId(),
                 user.getEmail(),
                 user.getPassWord(),
