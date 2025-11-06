@@ -13,7 +13,4 @@ public class UserService {
 
     final private UserRepository postRepo;
 
-    public List<User> getUsers() {
-        return postRepo.getUsers();
-    }
 }

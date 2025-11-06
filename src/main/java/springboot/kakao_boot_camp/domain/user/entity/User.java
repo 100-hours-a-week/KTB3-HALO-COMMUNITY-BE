@@ -35,16 +35,18 @@ public class User {
     @Size(min = 2, max = 10, message = "닉네임은 2~10자여야 합니다.")
     private String nickName;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
+    private String bio;
+
+    @Column(nullable = true)
     private String profileImage;
 
     @Enumerated(EnumType.STRING)
     @Column(length = 10)
     private UserRole role;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    @Builder.Default
-    private List<Post> posts = new ArrayList<>();       // 명시적인 형태
+    @Column(name = "deleted")
+    private boolean deleted = false;
 
     @Column(name = "created_at")
     LocalDateTime createdAt;
