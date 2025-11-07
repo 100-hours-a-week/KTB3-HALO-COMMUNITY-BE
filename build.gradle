@@ -32,6 +32,7 @@ dependencies {
 
     // MySQL
     implementation 'com.mysql:mysql-connector-j'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     // Lombok (compileOnly + annotationProcessor 조합)
     compileOnly 'org.projectlombok:lombok:1.18.30'
