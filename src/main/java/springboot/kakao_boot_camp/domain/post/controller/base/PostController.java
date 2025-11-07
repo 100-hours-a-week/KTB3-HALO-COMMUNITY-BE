@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.domain.post.controller;
+package springboot.kakao_boot_camp.domain.post.controller.base;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
-import springboot.kakao_boot_camp.domain.post.Service.PostService;
-import springboot.kakao_boot_camp.domain.post.dto.PostDtos.*;
+import springboot.kakao_boot_camp.domain.post.service.base.PostService;
+import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos.*;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
 import springboot.kakao_boot_camp.global.api.SuccessCode;
 import springboot.kakao_boot_camp.security.CustomUserDetails;

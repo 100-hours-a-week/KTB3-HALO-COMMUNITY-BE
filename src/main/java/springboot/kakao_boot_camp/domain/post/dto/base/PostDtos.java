@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.domain.post.dto;
+package springboot.kakao_boot_camp.domain.post.dto.base;
 
 
 import jakarta.validation.constraints.NotBlank;

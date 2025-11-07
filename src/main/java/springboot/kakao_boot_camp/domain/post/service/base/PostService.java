@@ -1,19 +1,18 @@
-package springboot.kakao_boot_camp.domain.post.Service;
+package springboot.kakao_boot_camp.domain.post.service.base;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springboot.kakao_boot_camp.domain.post.dto.PostDtos.*;
+import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos.*;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 import springboot.kakao_boot_camp.domain.post.exception.AccessDeniedPostException;
 import springboot.kakao_boot_camp.domain.post.exception.PostNotFoundException;
-import springboot.kakao_boot_camp.domain.post.repository.PostRepository;
-import springboot.kakao_boot_camp.domain.user.entity.User;
+import springboot.kakao_boot_camp.domain.post.repository.base.PostRepository;
+import springboot.kakao_boot_camp.domain.user.model.User;
 import springboot.kakao_boot_camp.domain.user.exception.UserNotFoundException;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 import springboot.kakao_boot_camp.global.dto.CursorInfo;
 
-import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -54,8 +53,9 @@ public class PostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(PostNotFoundException::new);
 
-        return PostDetailRes.from(post);
+        post.setViewCount(post.getViewCount()+1);
 
+        return PostDetailRes.from(post);
     }
 
     @Transactional(readOnly = true)

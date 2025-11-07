@@ -19,8 +19,8 @@ import springboot.kakao_boot_camp.domain.comment.exception.CommentNotFoundExcept
 import springboot.kakao_boot_camp.domain.comment.repository.CommentRepository;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 import springboot.kakao_boot_camp.domain.post.exception.PostNotFoundException;
-import springboot.kakao_boot_camp.domain.post.repository.PostRepository;
-import springboot.kakao_boot_camp.domain.user.entity.User;
+import springboot.kakao_boot_camp.domain.post.repository.base.PostRepository;
+import springboot.kakao_boot_camp.domain.user.model.User;
 import springboot.kakao_boot_camp.domain.user.exception.UserNotFoundException;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 import springboot.kakao_boot_camp.global.dto.PageInfo;

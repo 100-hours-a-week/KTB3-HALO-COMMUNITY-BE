@@ -8,7 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import springboot.kakao_boot_camp.domain.auth.Manager.login.jwt.JwtAuthManager;
+import springboot.kakao_boot_camp.domain.auth.util.Manager.login.jwt.JwtAuthManager;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.LoginReq;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.LoginRes;
 import springboot.kakao_boot_camp.domain.auth.exception.InvalidLoginException;
