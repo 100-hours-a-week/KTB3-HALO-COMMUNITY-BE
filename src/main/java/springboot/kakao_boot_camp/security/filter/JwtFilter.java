@@ -5,7 +5,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
@@ -19,10 +18,10 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import springboot.kakao_boot_camp.domain.auth.exception.InvalidTokenTypeException;
 import springboot.kakao_boot_camp.domain.auth.exception.JwtTokenExpiredException;
 import springboot.kakao_boot_camp.domain.auth.util.JwtUtil;
+import springboot.kakao_boot_camp.domain.auth.util.Manager.login.jwt.TokenBlacklistManager;
 import springboot.kakao_boot_camp.global.api.ErrorCode;
 import springboot.kakao_boot_camp.security.CustomUserDetails;
 import springboot.kakao_boot_camp.security.handler.CustomAuthenticationEntryPoint;
-import springboot.kakao_boot_camp.domain.auth.Manager.login.jwt.*;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -119,7 +118,9 @@ public class JwtFilter extends OncePerRequestFilter {
     private String resolveAccessToken(HttpServletRequest request) {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (header != null && header.startsWith(BEARER)) {
-            return header.substring(BEARER.length()).trim();
+            String token = header.substring(BEARER.length()).trim();
+            if(!token.equals("null"))
+                return token;
         }
         return null;
     }
