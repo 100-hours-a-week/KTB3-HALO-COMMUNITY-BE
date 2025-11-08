@@ -3,13 +3,14 @@ spring:
     banner-mode: off
 
   datasource:
-    url: jdbc:mysql://localhost:3306/Community?serverTimezone=UTC&useSSL=false
-    username: root
+    url: jdbc:mysql://hii.mysql.database.azure.com:3306/Community
+    username: nan7789
+    password: gustjq3735!
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
         format_sql: true
