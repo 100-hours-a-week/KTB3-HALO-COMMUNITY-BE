@@ -37,7 +37,7 @@ public class PostLikeService {
 
         // 3. 해당 유저가 이미 좋아요를 눌렀는지 체크
         // 3.1 유저 좋아요 정보 가져오기
-        Optional<PostLike> opt = postLikeRepository.findByUserIdAndPostId(userId , postId);
+        Optional<PostLike> opt = postLikeRepository.findByUserIdAndPostId(userId, postId);
 
         // 3.2 좋아요 정보가 없으면 생성 후 해당 게시글 좋아요 카운트 +1
         if (opt.isEmpty()) {
@@ -47,7 +47,9 @@ public class PostLikeService {
                     .build();
 
             postLikeRepository.save(postLike);
-            post.setViewCount(post.getViewCount()+1);
+
+            post.setLikeCount(post.getLikeCount() + 1);
+
 
             return true;
         }
@@ -55,11 +57,13 @@ public class PostLikeService {
         // 3.2 좋아요 정보가 있으면 삭제 후 해당 게시글 좋아요 카운트 -1
         else {
             postLikeRepository.delete(opt.get());
-            post.setViewCount(post.getViewCount()-1);
+
+            if (post.getLikeCount() >= 0) {
+                post.setLikeCount(post.getLikeCount() - 1);
+            }
 
             return false;
         }
-
 
 
     }
