@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.domain.post.repository;
+package springboot.kakao_boot_camp.domain.post.repository.base;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -6,7 +6,6 @@ import org.springframework.data.repository.query.Param;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     // 첫 페이지 (cursor = 0)

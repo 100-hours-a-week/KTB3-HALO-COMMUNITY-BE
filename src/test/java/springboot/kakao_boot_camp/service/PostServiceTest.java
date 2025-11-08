@@ -5,11 +5,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import springboot.kakao_boot_camp.domain.post.Service.PostService;
-import springboot.kakao_boot_camp.domain.post.dto.PostDtos.*;
+import springboot.kakao_boot_camp.domain.post.service.base.PostService;
+import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos.*;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
-import springboot.kakao_boot_camp.domain.post.repository.PostRepository;
-import springboot.kakao_boot_camp.domain.user.entity.User;
+import springboot.kakao_boot_camp.domain.post.repository.base.PostRepository;
+import springboot.kakao_boot_camp.domain.user.model.User;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 
 import static org.assertj.core.api.Assertions.assertThat;

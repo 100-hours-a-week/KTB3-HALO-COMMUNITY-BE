@@ -8,7 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springboot.kakao_boot_camp.domain.auth.Manager.login.jwt.RefreshTokenCookieManager;
+import springboot.kakao_boot_camp.domain.auth.util.Manager.login.jwt.RefreshTokenCookieManager;
 import springboot.kakao_boot_camp.domain.auth.dto.loginDtos.LoginRes;
 import springboot.kakao_boot_camp.domain.auth.service.TokenRefreshService;
 import springboot.kakao_boot_camp.global.api.ApiResponse;

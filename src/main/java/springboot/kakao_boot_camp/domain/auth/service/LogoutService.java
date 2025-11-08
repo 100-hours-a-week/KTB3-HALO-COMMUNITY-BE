@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
-import springboot.kakao_boot_camp.domain.auth.Manager.login.jwt.TokenBlacklistManager;
+import springboot.kakao_boot_camp.domain.auth.util.Manager.login.jwt.TokenBlacklistManager;
 import springboot.kakao_boot_camp.domain.auth.exception.JwtTokenExpiredException;
 import springboot.kakao_boot_camp.domain.auth.exception.NotAuthenticateUser;
 import springboot.kakao_boot_camp.domain.auth.util.JwtUtil;

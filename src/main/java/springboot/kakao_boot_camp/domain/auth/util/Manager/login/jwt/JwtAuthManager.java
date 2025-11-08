@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.domain.auth.Manager.login.jwt;
+package springboot.kakao_boot_camp.domain.auth.util.Manager.login.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

@@ -8,7 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import springboot.kakao_boot_camp.domain.user.UserRole;
+import springboot.kakao_boot_camp.domain.user.enums.UserRole;
 import springboot.kakao_boot_camp.domain.user.exception.UserNotFoundException;
 import springboot.kakao_boot_camp.domain.user.repository.UserRepository;
 import springboot.kakao_boot_camp.security.CustomUserDetails;
@@ -30,7 +30,7 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
         // 유저 찾고
-        springboot.kakao_boot_camp.domain.user.entity.User user = userRepository.findByEmail(email)
+        springboot.kakao_boot_camp.domain.user.model.User user = userRepository.findByEmail(email)
                 .orElseThrow(UserNotFoundException::new);
 
 
