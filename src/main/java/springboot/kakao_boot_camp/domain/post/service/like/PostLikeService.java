@@ -3,7 +3,6 @@ package springboot.kakao_boot_camp.domain.post.service.like;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos.*;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 import springboot.kakao_boot_camp.domain.post.entity.PostLike;
 import springboot.kakao_boot_camp.domain.post.exception.PostNotFoundException;
