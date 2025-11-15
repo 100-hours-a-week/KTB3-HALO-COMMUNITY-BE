@@ -1,8 +1,8 @@
 ---
 name: "[Feat] 기능 추가 탬플릿"
 about: 기능 추가
-title: "[Feature] "
-labels: ''
+title: "[Feat] "
+labels: Refactor
 assignees: ''
 
 ---
@@ -11,4 +11,4 @@ assignees: ''
 전체 작업사항
 
 📃 Todo
-- [] 작업사항
+- [ ] 작업사항
