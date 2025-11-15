@@ -40,6 +40,7 @@ public class User {
     private UserRole role;
 
     @Column(name = "deleted")
+    @Builder.Default
     private boolean deleted = false;
 
     @Column(name = "created_at")

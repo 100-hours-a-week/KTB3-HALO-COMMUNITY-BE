@@ -66,6 +66,7 @@ public class SecurityConfig {
         config.addAllowedMethod("*");
         config.setMaxAge(3600L);
 
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;
