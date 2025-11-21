@@ -62,6 +62,9 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://localhost:3000"); // 정확히 지정
         config.addAllowedOrigin("http://3.39.73.203:3000"); // 정확히 지정
         config.addAllowedOrigin("http://52.78.89.29:3000"); // 정확히 지정
+        config.addAllowedOrigin("http://notmean.duckdns.org:3000"); // 정확히 지정
+        config.addAllowedOrigin("http://notmean.duckdns.org:3000"); // 정확히 지정
+        config.addAllowedOrigin("https://notmean.duckdns.org:3000"); // 정확히 지정
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setMaxAge(3600L);
