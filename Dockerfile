@@ -6,9 +6,8 @@ COPY . .
 
 RUN chmod +x ./gradlew
 
-
 # Gradle 캐시 최적화 & JAR 만들기
-RUN ./gradlew clean bootJar
+RUN ./gradlew clean bootJar --no-daemon
 
 # 2단계: 런타임 스테이지
 FROM eclipse-temurin:21-jdk-alpine
