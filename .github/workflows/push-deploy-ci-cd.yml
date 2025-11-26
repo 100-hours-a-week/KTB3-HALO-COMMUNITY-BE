@@ -1,7 +1,6 @@
 name: Spring Push CI/CD
 
 env:
-  COMPOSE_PATH: /home/${{secrets.SERVER_USER}}/projects/not-me/docker/be
   IMAGE_TAG: 1.0.0
 
 on:
@@ -39,7 +38,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'bash -s' <<EOF
           set -e
-          cd $COMPOSE_PATH
+          cd /home/${{secrets.SERVER_USER}}/projects/not-me/docker/be
           docker compose down
           docker compose up -d
           EOF
