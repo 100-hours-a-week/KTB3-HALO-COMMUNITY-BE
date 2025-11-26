@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . .
 
 # Gradle 캐시 최적화 & JAR 만들기
-RUN gradle clean bootJar --no-daemon
+RUN ./gradlew clean bootJar --no-daemon
 
 # 2단계: 런타임 스테이지
 FROM eclipse-temurin:21-jdk-alpine
