@@ -6,7 +6,7 @@ env:
 on:
   push:
     branches:
-      - features
+      - feat/ci-cd
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
