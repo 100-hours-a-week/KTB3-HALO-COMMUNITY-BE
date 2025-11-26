@@ -43,8 +43,9 @@ jobs:
           cd $COMPOSE_PATH
           docker compose down
           docker compose up -d
+          EOF
           
           
           
-
-
+          
+          
