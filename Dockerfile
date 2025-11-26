@@ -4,6 +4,9 @@ FROM gradle:8.5-jdk21-alpine AS builder
 WORKDIR /app
 COPY . .
 
+RUN chmod +x ./gradlew
+
+
 # Gradle 캐시 최적화 & JAR 만들기
 RUN ./gradlew clean bootJar --no-daemon
 
