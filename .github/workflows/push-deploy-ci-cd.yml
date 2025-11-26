@@ -21,10 +21,9 @@ jobs:
 
       - name: Spring Image Build and Push
         run: |
-          ./gradlew clean
-          ./gradlew bootjar
-          docker build --no-cache  --platform linux/amd64 -t ${{secrets.DOCKER_USERNAME}}/not-me-be:1.0.0 --push .
-
+          docker build --platform linux/amd64 \
+            -t ${{ secrets.DOCKER_USERNAME }}/not-me-be:1.0.0 \
+            --push .
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
