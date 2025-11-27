@@ -51,14 +51,26 @@ jobs:
     needs: build-and-push
     runs-on: ubuntu-latest
     steps:
-      - name: Set up SSH    # 1. SSH 설정
+      - name: Set up SSH            # 1. SSH 설정
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-        
-      - name: Deploy to EC2 # 2. EC2에 접속해서 배포 스크립트 실행
+   
+
+      - name: Create .env file      # 2. 깃허브 액션에서 env 생성
+        run: |
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+          echo "IMAGE=${{ secrets.IMAGE }}" >> .env    
+
+      - name: Upload .env to EC2    # 3. env를 서버로 전송
+        run: |
+          scp -i ~/.ssh/id_rsa .env \
+          ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}:/home/${{ secrets.SERVER_USER }}/project/docker/be/.env
+
+      - name: Deploy to EC2         # 4. EC2에 접속해서 배포 스크립트 실행
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }} 'bash -s' <<EOF
           set -e
