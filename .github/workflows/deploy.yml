@@ -29,8 +29,6 @@ jobs:
 
       - name: 4. run tests
         run: ./gradlew test
-
-
   build-and-push:
     runs-on: ubuntu-latest
     steps:
