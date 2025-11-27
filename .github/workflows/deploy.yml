@@ -7,6 +7,7 @@ on:
   push:
     branches:
       - feat/ci-cd
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -30,6 +31,7 @@ jobs:
       - name: 4. run tests
         run: ./gradlew test
   build-and-push:
+    needs: test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # 깃허브 액션이 코드가져옴
