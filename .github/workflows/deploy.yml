@@ -22,7 +22,7 @@ jobs:
       - name: 3. set up JDK 21
         uses: actions/setup-java@v2
         with:
-          java-version: 21`
+          java-version: 21
           distribution: 'temurin'
 
       - name: 3. grant execute permission for gradlew
