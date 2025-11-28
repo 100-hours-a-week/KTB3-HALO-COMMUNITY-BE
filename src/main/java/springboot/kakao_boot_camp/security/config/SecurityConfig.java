@@ -64,6 +64,8 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://52.78.89.29:3000"); // 정확히 지정
         config.addAllowedOriginPattern("https://notmean.duckdns.org");
         config.addAllowedOriginPattern("http://notmean.duckdns.org");
+        config.addAllowedOriginPattern("http://our-planet-983823842.ap-northeast-2.elb.amazonaws.com:3000");
+
 
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
