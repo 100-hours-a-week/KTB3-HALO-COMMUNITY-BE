@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.cicd.Controller;
+package springboot.kakao_boot_camp.cicd.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
