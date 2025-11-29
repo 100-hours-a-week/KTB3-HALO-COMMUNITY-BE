@@ -55,6 +55,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+      # 0. 체크아웃
+      - name: 0. Checkout repo
+        uses: actions/checkout@v2
+
+
       # 1. SSH 초기 설정
       - name: Set up SSH
         run: |
