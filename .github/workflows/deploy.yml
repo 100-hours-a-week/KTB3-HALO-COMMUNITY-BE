@@ -74,7 +74,7 @@ jobs:
       # 2. 깃허브 액션에서 env 생성
       - name: Create .env file
         run: |
-          echo "RDS_DNS=${{ secrets.MYSQL_DATABASE }}" >> .env
+          echo "RDS_DNS=${{ secrets.RDS_DNS }}" >> .env
           echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
           echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
           echo "IMAGE=${{ secrets.IMAGE }}" >> .env    
