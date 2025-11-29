@@ -58,8 +58,6 @@ jobs:
       # 0. 체크아웃
       - name: 0. Checkout repo
         uses: actions/checkout@v2
-
-
       # 1. SSH 초기 설정
       - name: Set up SSH
         run: |
@@ -82,12 +80,18 @@ jobs:
 
 
     
+          
+          
 
       # 3. 깃허브 액션에 AWS CLI 설치
       - name: Install AWS CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y awscli
+        uses: unfor19/install-aws-cli-action@v1
+        with:
+          version: 2
+
+
+
+
 
       # 4. 깃허브 액션 CLI 환경변수 설정
       - name: Configure AWS credentials
