@@ -63,11 +63,11 @@ jobs:
       # 1. SSH 초기 설정
       - name: Set up SSH
         run: |
-          mkdir -p ~/.ssh
-          printf "%s" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
-      
+          sudo mkdir -p ~/.ssh
+#          printf "%s" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+#          chmod 600 ~/.ssh/id_rsa
+#          ssh-keyscan -H ${{ secrets.SERVER_HOST }} >> ~/.ssh/known_hosts
+#
       
       
 
