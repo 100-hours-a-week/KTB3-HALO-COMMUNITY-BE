@@ -48,24 +48,24 @@ jobs:
           docker build --platform linux/amd64 \
             -t ${{ secrets.DOCKER_USERNAME }}/not-me-be:1.0.0 \
             --push .
-
-
+  
+  
   
 
   deploy:
-#    needs: build-and-push
+    #    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
 
-      # 0. 체크아웃
-      - name: 0. Checkout repo
-        uses: actions/checkout@v2
+
       # 1. SSH 초기 설정
       - name: Set up SSH
         run: |
-           mkdir -p ~/.ssh
-           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-           chmod 600 ~/.ssh/id_rsa
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+      
+      
       
       
       
@@ -78,22 +78,11 @@ jobs:
           echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
           echo "IMAGE=${{ secrets.IMAGE }}" >> .env    
 
-
-
-
-    
-          
-          
-
       # 3. 깃허브 액션에 AWS CLI 설치
       - name: Install AWS CLI
         uses: unfor19/install-aws-cli-action@v1
         with:
           version: 2
-
-
-
-
 
       # 4. 깃허브 액션 CLI 환경변수 설정
       - name: Configure AWS credentials
@@ -102,6 +91,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
+
       # 5. BE1 인스턴스 퍼블릭 IP 반환
       - name: Get BE1 Public IP
         run: |
@@ -113,6 +103,7 @@ jobs:
           )
           echo "BE1_IP=$BE1_IP" >> $GITHUB_ENV
           echo "불러온 BE1 IP => $BE1_IP"
+
 
       # 6. B2 IP 가져오기
       - name: Get BE2 Public IP
@@ -127,19 +118,22 @@ jobs:
           echo "불러온 BE2 IP => $BE2_IP"
 
 
+
       # 7. B1에 .env 전송
       - name: Upload .env to BE1
         run: |
           scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env \
-          ubuntu@$BE1_IP:/home/ubuntu/AWS_DOCKER/be
+          ubuntu@$BE1_IP:/home/${{secrets.SERVER_USER}}/AWS_DOCKER/be
+
 
       # 8. B2에 .env 전송
       - name: Upload .env to BE2
         run: |
           scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa .env \
-          ubuntu@$BE2_IP:/home/${{ secrets.SERVER_USER }}/AWS_DOCKER/be
-          
-          
+          ubuntu@$BE2_IP:/home/${{secrets.SERVER_USER}}/AWS_DOCKER/be
+      
+      
+      
 
       # 9. BE1 배포
       - name: Deploy to BE1
@@ -151,6 +145,7 @@ jobs:
             docker compose pull
             docker compose up -d
           EOF
+
 
 
       # 10. BE2 배포
