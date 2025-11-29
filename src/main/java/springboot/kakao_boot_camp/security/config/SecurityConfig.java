@@ -66,6 +66,7 @@ public class SecurityConfig {
         config.addAllowedOriginPattern("http://notmean.duckdns.org");
         config.addAllowedOriginPattern("http://our-planet-983823842.ap-northeast-2.elb.amazonaws.com:3000");
         config.addAllowedOriginPattern("http://www.ouruniverse.cloud");
+        config.addAllowedOriginPattern("https://www.ouruniverse.cloud");
 
 
         config.addAllowedHeader("*");
