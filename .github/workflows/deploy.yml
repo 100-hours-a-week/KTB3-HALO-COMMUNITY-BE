@@ -53,7 +53,7 @@ jobs:
   
 
   deploy:
-    #    needs: build-and-push
+    needs: build-and-push
     runs-on: ubuntu-latest
     steps:
 
