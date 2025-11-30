@@ -62,6 +62,13 @@ public class SecurityConfig {
         config.addAllowedOrigin("http://localhost:3000"); // 정확히 지정
         config.addAllowedOrigin("http://3.39.73.203:3000"); // 정확히 지정
         config.addAllowedOrigin("http://52.78.89.29:3000"); // 정확히 지정
+        config.addAllowedOriginPattern("https://notmean.duckdns.org");
+        config.addAllowedOriginPattern("http://notmean.duckdns.org");
+        config.addAllowedOriginPattern("http://our-planet-983823842.ap-northeast-2.elb.amazonaws.com:3000");
+        config.addAllowedOriginPattern("http://www.ouruniverse.cloud");
+        config.addAllowedOriginPattern("https://www.ouruniverse.cloud");
+
+
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setMaxAge(3600L);
@@ -72,3 +79,5 @@ public class SecurityConfig {
         return source;
     }
 }
+
+
