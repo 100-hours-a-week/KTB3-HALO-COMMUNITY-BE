@@ -29,11 +29,10 @@ jobs:
           java-version: 21
           distribution: 'temurin'
 
-      - name: 3. grant execute permission for gradlew
-        run: chmod +x gradlew
 
-      - name: 4. run tests
-        run: #./gradlew test
+
+
+
   build-and-push:
     needs: test
     runs-on: ubuntu-latest
