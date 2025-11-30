@@ -6,11 +6,7 @@ env:
 on:
   pull_request:
     branches:
-      - develop
-  push:
-    branches:
-      - develop
-
+      - main      # 실제 운영되는 브랜치 develop -> main 으로 변경
 jobs:
 
   test:
