@@ -7,6 +7,9 @@ on:
   pull_request:
     branches:
       - develop
+  push:
+    branches:
+      - develop
 
 jobs:
 
@@ -36,6 +39,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2 # 깃허브 액션이 코드가져옴
+
+      - name: 1. gradlew 권한 변경
+        run: |
+          chmod +x gradlew
+
+          - name: 2. 빌드 Spring Boot (bootJar)
+            run: |
+              ./gradlew build -x test
 
       - name: Docker Hub Login
         uses: docker/login-action@v3
