@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.domain.post.dto.base;
+package springboot.kakao_boot_camp.domain.post.dto;
 
 public record UserProfile(
         Long id,

@@ -8,11 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos;
 import springboot.kakao_boot_camp.domain.post.enums.PostSuccessCode;
 import springboot.kakao_boot_camp.domain.post.service.like.PostLikeService;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
-import springboot.kakao_boot_camp.global.api.SuccessCode;
 import springboot.kakao_boot_camp.security.CustomUserDetails;
 
 @RestController

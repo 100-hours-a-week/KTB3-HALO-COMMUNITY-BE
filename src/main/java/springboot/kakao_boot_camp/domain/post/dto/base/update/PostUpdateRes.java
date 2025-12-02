@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.domain.post.dto.base;
+package springboot.kakao_boot_camp.domain.post.dto.base.update;
 
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 
