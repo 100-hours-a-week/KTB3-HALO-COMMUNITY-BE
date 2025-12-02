@@ -4,9 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import springboot.kakao_boot_camp.domain.comment.entity.Comment;
 import springboot.kakao_boot_camp.domain.user.model.User;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -34,17 +37,20 @@ public class Post {
     int likeCount = 0;      // default 0
 
     @Column(nullable = false)
-    int viewCount= 0;
+    int viewCount = 0;
 
     @Column(nullable = false)
     int commentCount = 0;
+
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comment> comments = new ArrayList<>();
+
 
     @CreatedDate
     LocalDateTime createdAt;
 
     LocalDateTime updatedAt;
-
-
 
 
 }
