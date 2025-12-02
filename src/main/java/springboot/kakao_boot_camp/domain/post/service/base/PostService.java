@@ -3,7 +3,7 @@ package springboot.kakao_boot_camp.domain.post.service.base;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos.*;
+import springboot.kakao_boot_camp.domain.post.dto.base.*;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 import springboot.kakao_boot_camp.domain.post.exception.AccessDeniedPostException;
 import springboot.kakao_boot_camp.domain.post.exception.PostNotFoundException;
