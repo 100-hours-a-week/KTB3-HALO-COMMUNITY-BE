@@ -56,7 +56,7 @@ public class PostService {
     // -- Get Post --
     @Transactional
     public PostDetailRes getPostDetail(Long id) {
-        Post post = postRepository.findById(id)
+        Post post = postRepository.findDetailById(id)
                 .orElseThrow(PostNotFoundException::new);
 
         post.setViewCount(post.getViewCount()+1);
