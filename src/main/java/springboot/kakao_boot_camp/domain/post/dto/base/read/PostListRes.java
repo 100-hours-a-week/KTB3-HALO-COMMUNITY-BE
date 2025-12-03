@@ -1,5 +1,6 @@
 package springboot.kakao_boot_camp.domain.post.dto.base.read;
 
+import springboot.kakao_boot_camp.domain.post.entity.Post;
 import springboot.kakao_boot_camp.global.dto.CursorInfo;
 
 import java.time.LocalDateTime;
@@ -21,6 +22,8 @@ public record PostListRes(
             String nickname,
             String profileImageUrl,
 
+            String postImageUrl,
+
             int likeCount,
             int commentCount,
             int viewCount,
@@ -29,26 +32,19 @@ public record PostListRes(
             LocalDateTime updatedAt
     ) {
         public static PostSummary of(
-                Long postId,
-                String title,
-                String nickname,
-                String profileImageUrl,
-                int likeCount,
-                int commentCount,
-                int viewCount,
-                LocalDateTime createdAt,
-                LocalDateTime updatedAt
+                Post post
         ) {
             return new PostSummary(
-                    postId,
-                    title,
-                    nickname,
-                    profileImageUrl,
-                    likeCount,
-                    commentCount,
-                    viewCount,
-                    createdAt,
-                    updatedAt
+                    post.getId(),
+                        post.getTitle(),
+                        post.getUser().getNickName(),
+                        post.getUser().getProfileImage(),
+                        post.getImageUrl(),
+                        post.getLikeCount(),
+                        post.getCommentCount(),
+                        post.getViewCount(),
+                        post.getCreatedAt(),
+                        post.getUpdatedAt()
             );
         }
     }

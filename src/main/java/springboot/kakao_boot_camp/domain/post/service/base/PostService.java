@@ -59,7 +59,7 @@ public class PostService {
         Post post = postRepository.findDetailById(id)
                 .orElseThrow(PostNotFoundException::new);
 
-        post.setViewCount(post.getViewCount()+1);
+        post.setViewCount(post.getViewCount() + 1);
 
         return PostDetailRes.from(post);
     }
@@ -82,17 +82,7 @@ public class PostService {
 
         // 📦 DTO 변환
         List<PostListRes.PostSummary> postSummaries = limitedPosts.stream()
-                .map(post -> PostListRes.PostSummary.of(
-                        post.getId(),
-                        post.getTitle(),
-                        post.getUser().getNickName(),
-                        post.getUser().getProfileImage(),
-                        post.getLikeCount(),
-                        post.getCommentCount(),
-                        post.getViewCount(),
-                        post.getCreatedAt(),
-                        post.getUpdatedAt()
-                ))
+                .map(PostListRes.PostSummary::of)
                 .toList();
 
         // 📍 페이지 정보 생성
