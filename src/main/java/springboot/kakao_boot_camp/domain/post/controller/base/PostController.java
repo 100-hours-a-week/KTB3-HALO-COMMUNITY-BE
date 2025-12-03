@@ -6,8 +6,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springboot.kakao_boot_camp.domain.post.dto.base.create.PostCreateReq;
+import springboot.kakao_boot_camp.domain.post.dto.base.create.PostCreateRes;
+import springboot.kakao_boot_camp.domain.post.dto.base.delete.PostDeleteRes;
+import springboot.kakao_boot_camp.domain.post.dto.base.read.PostDetailRes;
+import springboot.kakao_boot_camp.domain.post.dto.base.read.PostListRes;
+import springboot.kakao_boot_camp.domain.post.dto.base.update.PostUpdateReq;
+import springboot.kakao_boot_camp.domain.post.dto.base.update.PostUpdateRes;
 import springboot.kakao_boot_camp.domain.post.service.base.PostService;
-import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos.*;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
 import springboot.kakao_boot_camp.global.api.SuccessCode;
 import springboot.kakao_boot_camp.security.CustomUserDetails;
@@ -64,7 +70,7 @@ public class PostController {
 
     // -- D --
     @DeleteMapping("/{postId}")
-    public ResponseEntity<ApiResponse<PostDeleteRes>> delete(@PathVariable Long postId,  @AuthenticationPrincipal CustomUserDetails currentUser) {
+    public ResponseEntity<ApiResponse<PostDeleteRes>> delete(@PathVariable Long postId, @AuthenticationPrincipal CustomUserDetails currentUser) {
         PostDeleteRes res = postService.deletePost(currentUser.getId(), postId);
 
         return ResponseEntity.status(HttpStatus.OK)

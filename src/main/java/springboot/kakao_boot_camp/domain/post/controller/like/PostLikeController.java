@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos;
+import springboot.kakao_boot_camp.domain.post.dto.like.PostLikeDto;
 import springboot.kakao_boot_camp.domain.post.enums.PostSuccessCode;
 import springboot.kakao_boot_camp.domain.post.service.like.PostLikeService;
 import springboot.kakao_boot_camp.global.api.ApiResponse;
-import springboot.kakao_boot_camp.global.api.SuccessCode;
 import springboot.kakao_boot_camp.security.CustomUserDetails;
 
 @RestController
@@ -24,17 +23,19 @@ public class PostLikeController {
 
     // -- R --
     @GetMapping("/{postId}")
-    public ResponseEntity<ApiResponse<Void>> likeOrUnlikePost(@AuthenticationPrincipal CustomUserDetails currentUser
-    ,@ PathVariable Long postId) {
+    public ResponseEntity<ApiResponse<PostLikeDto>> likeOrUnlikePost(@AuthenticationPrincipal CustomUserDetails currentUser
+    , @ PathVariable Long postId) {
 
         boolean liked = postLikeService.postLikeOrUnlike(currentUser.getId(), postId);
 
+
+
         if (liked) {
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(ApiResponse.success(PostSuccessCode.POST_LIKE_SUCCESS, null));
+                    .body(ApiResponse.success(PostSuccessCode.POST_LIKE_SUCCESS, PostLikeDto.from(currentUser.getId(), true)));
         } else {
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(ApiResponse.success(PostSuccessCode.POST_DISLIKE_SUCCESS, null));
+                    .body(ApiResponse.success(PostSuccessCode.POST_DISLIKE_SUCCESS, PostLikeDto.from(currentUser.getId(), false)));
         }
     }
 
