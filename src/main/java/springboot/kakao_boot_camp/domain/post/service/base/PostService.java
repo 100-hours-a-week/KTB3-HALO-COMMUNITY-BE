@@ -3,7 +3,13 @@ package springboot.kakao_boot_camp.domain.post.service.base;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import springboot.kakao_boot_camp.domain.post.dto.base.PostDtos.*;
+import springboot.kakao_boot_camp.domain.post.dto.base.create.PostCreateReq;
+import springboot.kakao_boot_camp.domain.post.dto.base.create.PostCreateRes;
+import springboot.kakao_boot_camp.domain.post.dto.base.delete.PostDeleteRes;
+import springboot.kakao_boot_camp.domain.post.dto.base.read.PostDetailRes;
+import springboot.kakao_boot_camp.domain.post.dto.base.read.PostListRes;
+import springboot.kakao_boot_camp.domain.post.dto.base.update.PostUpdateReq;
+import springboot.kakao_boot_camp.domain.post.dto.base.update.PostUpdateRes;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 import springboot.kakao_boot_camp.domain.post.exception.AccessDeniedPostException;
 import springboot.kakao_boot_camp.domain.post.exception.PostNotFoundException;
@@ -50,10 +56,10 @@ public class PostService {
     // -- Get Post --
     @Transactional
     public PostDetailRes getPostDetail(Long id) {
-        Post post = postRepository.findById(id)
+        Post post = postRepository.findDetailById(id)
                 .orElseThrow(PostNotFoundException::new);
 
-        post.setViewCount(post.getViewCount()+1);
+        post.setViewCount(post.getViewCount() + 1);
 
         return PostDetailRes.from(post);
     }
@@ -76,17 +82,7 @@ public class PostService {
 
         // 📦 DTO 변환
         List<PostListRes.PostSummary> postSummaries = limitedPosts.stream()
-                .map(post -> PostListRes.PostSummary.of(
-                        post.getId(),
-                        post.getTitle(),
-                        post.getUser().getNickName(),
-                        post.getUser().getProfileImage(),
-                        post.getLikeCount(),
-                        post.getCommentCount(),
-                        post.getViewCount(),
-                        post.getCreatedAt(),
-                        post.getUpdatedAt()
-                ))
+                .map(PostListRes.PostSummary::of)
                 .toList();
 
         // 📍 페이지 정보 생성

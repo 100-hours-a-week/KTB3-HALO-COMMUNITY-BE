@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import springboot.kakao_boot_camp.domain.post.entity.Post;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
     // 첫 페이지 (cursor = 0)
@@ -16,4 +17,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.id < :cursor ORDER BY p.id DESC LIMIT :limit")
     List<Post> findTopNByIdLessThanOrderByIdDesc(@Param("cursor") Long cursor, @Param("limit") int limit);
 
+    @Query("""
+            SELECT p FROM Post p
+            JOIN FETCH p.user
+            WHERE p.id = :postId
+            """)
+    Optional<Post> findDetailById(@Param("postId") Long postId);
 }
