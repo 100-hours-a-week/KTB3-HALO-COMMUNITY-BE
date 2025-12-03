@@ -22,7 +22,7 @@ import springboot.kakao_boot_camp.security.CustomUserDetails;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/user")
 public class UserController {
 
     private final UserService userService;

@@ -1,4 +1,4 @@
-package springboot.kakao_boot_camp.service;
+package springboot.kakao_boot_camp.service.domain.post;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

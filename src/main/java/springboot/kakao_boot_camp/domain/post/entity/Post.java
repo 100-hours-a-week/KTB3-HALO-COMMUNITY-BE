@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
+import springboot.kakao_boot_camp.domain.comment.entity.Comment;
 import springboot.kakao_boot_camp.domain.user.model.User;
 
 import java.time.LocalDateTime;
@@ -43,6 +44,8 @@ public class Post {
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<PostLike> likes;
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Comment> comments;
 
     @CreatedDate
     LocalDateTime createdAt;

@@ -36,3 +36,8 @@ out/
 ### VS Code ###
 .vscode/
 /src/empty/
+.DS_Store
+
+
+### 로그 ###
+/logs

@@ -39,9 +39,12 @@ public class CommentService {
     // -- C --
     public CommentCreateRes createComment(Long userId, Long postId, CommentCreateReq req) {
 
+
+        // 쿼리 1
         User user = userRepository.findById(userId)
                 .orElseThrow(UserNotFoundException::new);
 
+        // 쿼리 2
         Post post = postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);
 
@@ -61,6 +64,7 @@ public class CommentService {
                 .updatedAt(LocalDateTime.now())
                 .build();
 
+        // 쿼리 3
         Comment saved = commentRepository.save(comment);
 
         return CommentCreateRes.from(saved);
