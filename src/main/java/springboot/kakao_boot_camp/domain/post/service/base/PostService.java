@@ -73,6 +73,10 @@ public class PostService {
                 ? postRepository.findTopNByOrderByIdDesc(size + 1)
                 : postRepository.findTopNByIdLessThanOrderByIdDesc(cursor, size + 1);
 
+        for(Post post:posts){
+            post.setCommentCount(post.getComments().size());
+        }
+
         // 다음 커서 계산
         boolean hasNext = posts.size() > size;
         Long nextCursor = hasNext ? posts.get(size - 1).getId() : null;
