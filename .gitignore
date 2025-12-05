@@ -38,6 +38,12 @@ out/
 /src/empty/
 .DS_Store
 
+# Spring logs
+*.log
+*.log.*
+logs/
+
+
 
 ### 로그 ###
 /logs
