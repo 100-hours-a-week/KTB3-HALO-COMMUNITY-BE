@@ -1,4 +1,4 @@
-name: Spring Push CI/CD (v 1.5)
+name: Spring Push CI/CD (v 1.4)
 
 env:
   IMAGE_TAG: 1.0.0
@@ -130,16 +130,16 @@ jobs:
               ubuntu@$IP:/home/ubuntu/AWS_DOCKER/be
 
             # Docker 배포
-            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@$IP <<'EOF'
-set -e
-cd /home/ubuntu/AWS_DOCKER/be
-docker compose down
-docker compose pull
-docker compose up -d
-EOF
-
+            ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@$IP << 'EOF'
+              set -e
+              cd /home/ubuntu/AWS_DOCKER/be
+              docker compose down
+              docker compose pull
+              docker compose up -d
+            EOF
           done
-      
+
+
 
     
     
