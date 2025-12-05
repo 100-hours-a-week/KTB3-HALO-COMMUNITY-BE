@@ -131,14 +131,14 @@ jobs:
 
             # Docker 배포
             ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ubuntu@$IP <<'EOF'
-            set -e
-            cd /home/ubuntu/AWS_DOCKER/be
-            docker compose down
-            docker compose pull
-            docker compose up -d
-            EOF
-            
-            done
+set -e
+cd /home/ubuntu/AWS_DOCKER/be
+docker compose down
+docker compose pull
+docker compose up -d
+EOF
+
+          done
       
 
     
