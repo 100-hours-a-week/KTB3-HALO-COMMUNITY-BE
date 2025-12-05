@@ -3,15 +3,12 @@ name: Spring Push CI/CD (v 1.8)
 env:
   IMAGE_TAG: 1.0.0
 
-on:
-  push:
-    branches:
-      - infra/ci-cd
 
-#  pull_request:
-#    branches:
-#      - main
-#    types: [ closed ]
+on:
+  pull_request:
+    branches:
+      - main
+    types: [ closed ]
 
 
 jobs:
