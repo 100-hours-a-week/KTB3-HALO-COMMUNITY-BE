@@ -150,7 +150,9 @@
 <br/>
 추후 백엔드 서버와 DB를 프라이빗 서버에 배치하기 위해 내부 사설망인 VPC를 구축하고 안정적인 서버를 위한 트래픽 별로 서버의 개수를 변하게 할 수 있는 Auto Scaling Group기반 Application Load Balancer 사용하였다.
 
-<br>
+<br/>
+<br/>
+
 
 그리고 Docker Compose와 DockerFile을 활용하여 컨테이너 생성 및 소멸 스크립트를 env 파일과 함께 실행하여 여러 컨테이너를 관리하는 도커파일에 대한 책임을 compose로 분리하였다.
 <br/>
