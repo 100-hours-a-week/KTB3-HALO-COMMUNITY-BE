@@ -6,7 +6,9 @@ env:
 on:
   pull_request:
     branches:
-      - main      # 실제 운영되는 브랜치 develop -> main 으로 변경
+      - main
+    types: [closed]
+
 jobs:
 
   test:
