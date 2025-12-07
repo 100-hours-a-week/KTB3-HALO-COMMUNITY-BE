@@ -73,6 +73,7 @@ public class UserController {
 
 
     // 유저 하드 삭제
+    @DeleteMapping
     public ResponseEntity<ApiResponse<UserGetRes>> hardDeleteUser(@AuthenticationPrincipal CustomUserDetails currentUser) {
         if (adminManager.isAdmin(currentUser.getAuthorities())) {
             userService.hardDeleteUserProfile(currentUser.getId());
