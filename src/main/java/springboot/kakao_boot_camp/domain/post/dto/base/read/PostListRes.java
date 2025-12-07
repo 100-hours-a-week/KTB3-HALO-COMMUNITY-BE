@@ -22,6 +22,7 @@ public record PostListRes(
             String nickname,
             String profileImageUrl,
 
+            String content,
             String postImageUrl,
 
             int likeCount,
@@ -39,6 +40,7 @@ public record PostListRes(
                         post.getTitle(),
                         post.getUser().getNickName(),
                         post.getUser().getProfileImage(),
+                        post.getContent(),
                         post.getImageUrl(),
                         post.getLikeCount(),
                         post.getCommentCount(),
