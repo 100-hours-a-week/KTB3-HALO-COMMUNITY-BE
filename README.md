@@ -7,7 +7,8 @@
 
 
 ## 프로젝트 컨셉
-- https://github.com/100-hours-a-week/KTB3-HALO-COMMUNITY-FE/issues/1
+- <a href="[https://github.com/100-hours-a-week/KTB3-HALO-COMMUNITY-FE](https://github.com/100-hours-a-week/KTB3-HALO-COMMUNITY-FE/issues/1)">Our Universe Concept v1</a>
+
 
 ### 개발 인원 및 기간
 
