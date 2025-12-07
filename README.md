@@ -19,7 +19,7 @@
 
 ### 사용 기술 및 tools
 - `Spring Boot`
-- `JPA`, `lombok` : 개발 편의성 향상 DB 쿼리 메서드 자동화
+- `JPA`, `lombok` : 개발 편의성 향상 및 DB 쿼리 메서드 자동화
 - `AWS` : Auto Scaling Group, Application Load Balancer, Route 53, API Gateway, Lamdba, RDS, VPC, Lamdba
 - `Docker` : 서로 다른 운영체제 및 환경에서 해당 서비스를 배포하기 위해 그리고 CI/CD에 테스트를 돌릴 때 매번 같은 환경을 유지하기 위해 사용하였습니다.
 - `Docker Compse` : docker 실행 시, 예민한 값들이 들어있는 env파일을 참조하고 추후에 하나의 서버에서 여러 컨테이너들을 동시에 띄울 때를 위해 사용하였습니다.
