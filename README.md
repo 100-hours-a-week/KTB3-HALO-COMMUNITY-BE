@@ -144,7 +144,7 @@
 <br/>
 
 
-## 인프라 설계2
+## 인프라 설계
 ### 1. AWS 아키텍처
 <img width="400" height="600" alt="image" src="https://not-me-be.s3.ap-northeast-2.amazonaws.com/our_universe/cloud/image+(2).webp" />
 <br/>
