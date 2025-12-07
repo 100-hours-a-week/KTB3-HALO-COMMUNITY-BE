@@ -26,7 +26,7 @@
 - `Github Actions` : 컨테이너의 환경 안에서 테스트, 빌드 그리고 배포를 자동화하여 개발 편의성과 속도를 향상시키려고 사용하였습니다
 
 ### 서비스 시연 연상
-
+- https://drive.google.com/file/d/1EttwNVwtdNoeDy3Ic6i3Nkh6yxIf5e_k/view?usp=sharing
 
 ### Front-end
 - <a href="https://github.com/100-hours-a-week/KTB3-HALO-COMMUNITY-FE">Front-end Github</a>
