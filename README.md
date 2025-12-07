@@ -146,9 +146,12 @@
 
 ## 인프라 설계2
 ### 1. AWS 아키텍처
-<img width="400" height="600" alt="image" src="https://github.com/user-attachments/assets/8f74d0f3-9e1b-4719-bb83-cac7a39a86da" />
+<img width="400" height="600" alt="image" src="https://not-me-be.s3.ap-northeast-2.amazonaws.com/our_universe/cloud/image+(2).webp" />
 <br/>
-ㅇㅇㅇ
+추후 백엔드 서버와 DB를 프라이빗 서버에 배치하기 위해 내부 사설망인 VPC를 구축하고 안정적인 서버를 위한 트래픽 별로 서버의 개수를 변하게 할 수 있는 Auto Scaling Group기반 Application Load Balancer 사용하였다.
+
+
+그리고 Docker Compose와 DockerFile을 활용하여 컨테이너 생성 및 소멸 스크립트를 env 파일과 함께 실행하여 여러 컨테이너를 관리하는 도커파일에 대한 책임을 compose로 분리하였다.
 <br/>
 
 - `Auto Scaling Group(ASG)` : 트래픽 증가시 서버를 자동으로 추가하게 하여 트래픽별로 적절한 서버 비용을 사용하게 하였습니다.
@@ -162,11 +165,24 @@
 
 
 ## 트러블 슈팅
-추후 작성..
+
+1. 커스텀 시큐리티 구현시 스레드 로컬이 필요했던 문제
+각 요청 인증 정보를 저장하기 위해  스레드 로컬을 구현할 필요성이 있었기 때문에`ThreadLocal` 클래스를 사용하여 각 스레드에 대한 인증정보를 저장하고 불러오는 `CustomSecurityContextHolder`를 구현하여 해결하였다. 
 
 <br/>
 
 ## 프로젝트 후기
+
+- 인증 및 인가
+1. 스프링 프레임워크에서 내부적으로 Proivder를 선택할 때, argon2, bcrypt 그리고 pbkdf2 같은 암호화 알고리즘들이 Default로 들어가는 것을 코드상으로 확인할 수 있는 좋은 경험이였다.
+2.  JWT는 블랙리스트를 구현하기 위해 서버에 메모리를 일정부분 할당하여 사용한다는 것을 제외하고는 서버의 직접적인 요청을 보내지 않지만 그 서버가 개입하지 않는, 즉 jwt 액세스 토큰이 살아있는 기간 동안 해킹을 당하면 서버가 바로 조치할 수 있는 방법이 없다는 것을 알게 되었고 완벽한 보안은 존재하지 않는다라는 것이 씁쓸하게 느껴졌었다.
+<br>
+<br>
+
+ - RestFull API
+<br>
+ 1. URL에 리소스를 그리고 메서드에 행위를 적고 이것을 직관적으로 이해하게 함으로써 해당 컨텍스트를 이해하는데 드는 시간을 줄임으로서 개발을 용이하게 도움을 줄 수 있다는 것을 알게 되었습니다.
+ 
 
 
 <br/>
