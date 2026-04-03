@@ -1,6 +1,7 @@
 package springboot.kakao_boot_camp.security.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -19,6 +20,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import springboot.kakao_boot_camp.security.filter.JwtFilter;
 import springboot.kakao_boot_camp.security.handler.CustomAuthenticationEntryPoint;
 
+import java.util.List;
+
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -26,6 +29,12 @@ import springboot.kakao_boot_camp.security.handler.CustomAuthenticationEntryPoin
 public class SecurityConfig {
     private final JwtFilter springSecuritySessionFilter;      // 스프링 시큐리티 O, 세션 기반 인증 필터
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+    @Value("${cors.allowed-origins:}")
+    private List<String> allowedOrigins;
+
+    @Value("${cors.allowed-origin-patterns:}")
+    private List<String> allowedOriginPatterns;
 
 
     @Bean
@@ -59,20 +68,24 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000"); // 정확히 지정
-        config.addAllowedOrigin("http://3.39.73.203:3000"); // 정확히 지정
-        config.addAllowedOrigin("http://52.78.89.29:3000"); // 정확히 지정
-        config.addAllowedOriginPattern("https://notmean.duckdns.org");
-        config.addAllowedOriginPattern("http://notmean.duckdns.org");
-        config.addAllowedOriginPattern("http://our-planet-983823842.ap-northeast-2.elb.amazonaws.com:3000");
-        config.addAllowedOriginPattern("http://www.ouruniverse.cloud");
-        config.addAllowedOriginPattern("https://www.ouruniverse.cloud");
 
+        // 환경변수에서 허용된 오리진 설정
+        if (allowedOrigins != null && !allowedOrigins.isEmpty()) {
+            allowedOrigins.stream()
+                    .filter(origin -> origin != null && !origin.isBlank())
+                    .forEach(config::addAllowedOrigin);
+        }
+
+        // 환경변수에서 허용된 오리진 패턴 설정
+        if (allowedOriginPatterns != null && !allowedOriginPatterns.isEmpty()) {
+            allowedOriginPatterns.stream()
+                    .filter(pattern -> pattern != null && !pattern.isBlank())
+                    .forEach(config::addAllowedOriginPattern);
+        }
 
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         config.setMaxAge(3600L);
-
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
